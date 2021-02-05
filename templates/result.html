@@ -1,0 +1,10 @@
+Lisäsit ruokapäiväkirjaan seuraavat ruoka-aineet:
+<p>
+{{ ateria }}
+<ul>
+{% for ruokaaine in ruokaaineet %}
+<li> {{ ruokaaine }}
+{% endfor %}
+</ul>
+Määrä: <br>
+{{ message }}

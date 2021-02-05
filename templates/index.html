@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block title %}Etusivu{% endblock %}
+{% block content %}
+<h2>Tervetuloa pitämään ruokapäiväkirjaa</h2>
+
+<br>
+
+<form action="/">
+  <label for="date">Tänään on:</label>
+  <input type="date" id="date" name="date">
+  <input type="submit" value="Lähetä">
+</form>
+<p>
+Valitse ateria:
+<p>
+<input type="radio" name="meal" value="aamupala"> aamupala
+<input type="radio" name="meal" value="lounas"> lounas
+<input type="radio" name="meal" value="välipala"> välipala
+<input type="radio" name="meal" value="illallinen"> illallinen
+<input type="radio" name="meal" value="iltapala"> iltapala
+<input type="radio" name="meal" value="muu"> muu
+<p>
+Lisää ruoka-aine:
+<textarea name="foodstuff" rows="1" cols="50"></textarea>
+<p>
+<input type="submit" value="Lisää ruokapäiväkirjaan">
+
+{% endblock %}
