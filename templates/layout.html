@@ -1,11 +1,15 @@
-<!doctype html>
-<link rel="stylesheet" href="main.css">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title> FoodDiary - {% block title %}{% endblock %}</title>
-<h1> Ruokapäiväkirja</h1>
-<a href="/">Etusivu</a>
-<a href="/login">Kirjaudu</a>
-<hr>
-{% block content %}{% endblock %}
+<!DOCTYPE html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> FoodDiary - {% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="static/css/main.css">
+</head>
 
+<body>
+  <h2>FoodDiary</h2>
+  <a href="/">Etusivu</a>
+  <a href="/login">Kirjaudu</a>
+  <hr>
+  {% block content %}{% endblock %}
+</body>
 
