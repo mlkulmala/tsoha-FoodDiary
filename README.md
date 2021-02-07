@@ -23,4 +23,13 @@ saavutettu (tai kuinka suurella määrällä se on ylitetty).
 Sovellukseen voi myös kirjautua pääkäyttäjänä, jolloin sovelluksen 
 käyttämään tietokantaan voi lisätä uusia ruoka-aineita.
 
-## Tietokanta
+## Välipalautus 1
+
+Sovelluksen pitäisi olla nähtävissä 
+[Herokussa](https://tsoha-fooddiary.herokuapp.com/) mutta se ei jostain 
+syystä näy siellä. Tästä lisää Telegram-viesteissä.
+
+Kaikkien asennusten ja käyttöönottojen kanssa on ollut 
+niin paljon ongelmia, että itse sovellus on vielä alkutekijöissään. 
+Tämänhetkinen aikaansaannos on kokoelma erilaisia kokeiluja vailla mitään 
+logiikkaa eikä työ nykyisessä tilassaan ole vertaisarvioinnin arvoinen.
