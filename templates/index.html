@@ -2,35 +2,42 @@
 {% block title %}Etusivu{% endblock %}
 
 <body>
-  {% block content %}
-    <div class="left">
-      <h2>Tervetuloa pitämään ruokapäiväkirjaa</h2>
-      <form action="/">
-        <label for="date">Tänään:</label>
-        <input type="date" id="date" name="date">
-        <input type="submit" value="Lähetä">
-      </form>
-      Valitse ateria:
-      <p>
-      <input type="radio" name="meal" value="aamupala"> aamupala
-      <input type="radio" name="meal" value="lounas"> lounas
-      <input type="radio" name="meal" value="välipala"> välipala
-      <input type="radio" name="meal" value="illallinen"> illallinen
-      <input type="radio" name="meal" value="iltapala"> iltapala
-      <input type="radio" name="meal" value="muu"> muu
-      <p>
-      Lisää ruoka-aine:<br>
-      <textarea name="foodstuff" rows="1" cols="50"></textarea>
-      <p>
-      <input type="submit" value="Lisää ruokapäiväkirjaan">  
-    </div>
-    <div class="right">
-      <h3>Päivän saldo</h3>
-      <P>Tavoite -- kcal
-      <p>Syömättä -- kcal
-    </div>
+  <section class:"container">
+    {% block content %}
+     <div class="one">
+        <h2>Tervetuloa pitämään ruokapäiväkirjaa</h2>
+        <form action="/">
+          <label for="date">Tänään on:</label>
+          <input type="date" id="date" name="date">
+          <input type="submit" value="Lähetä">
+        </form>
+        <p>
+        Valitse ateria:
+        <p>
+        <input type="radio" name="meal" value="aamupala"> aamupala
+        <input type="radio" name="meal" value="lounas"> lounas
+        <input type="radio" name="meal" value="välipala"> välipala
+        <input type="radio" name="meal" value="illallinen"> illallinen
+        <input type="radio" name="meal" value="iltapala"> iltapala
+        <input type="radio" name="meal" value="muu"> muu
+        <p>
+        Lisää ruoka-aine:<br>
+        <textarea name="foodstuff" rows="1" cols="50"></textarea><br>
+        <input type="submit" value="Lisää ruokapäiväkirjaan"> 
+        <p> 
+        Lisää määrä:<br>
+        <textarea name="amount" rows="1" cols="50"></textarea><br>
+        <input type="submit" value="Lisää">
+        <p>
+      </div>
+     <div class="two">
+       <h3>Päivän saldo</h3>
+        <P>Tavoite -- kcal
+        <p>Syömättä -- kcal
+      </div>
   
 
 
   {% endblock %}
+  </section>
 </body>
