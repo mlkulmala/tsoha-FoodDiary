@@ -1,9 +1,19 @@
 {% extends "layout.html" %}
 {% block title %}Etusivu{% endblock %}
 
+
+{% block content %}
+
+{% if session.username %}
+<p>Olet kirjautunut nimellä {{ session.username }}</p>
+<a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<a href="/login">Kirjaudu sisään</a>
+<a href="/sign_up">Luo käyttäjätunnus</a>
+{% endif %}
+
 <body>
   <section class:"container">
-    {% block content %}
      <div class="one">
         <h2>Tervetuloa pitämään ruokapäiväkirjaa</h2>
         <form action="/">
@@ -38,6 +48,7 @@
   
 
 
-  {% endblock %}
+  
   </section>
 </body>
+{% endblock %}
