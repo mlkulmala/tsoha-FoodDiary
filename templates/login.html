@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block title %}Kirjautuminen{% endblock %}
+
+{% block content %}
+
+<body>
+  <h4>Kirjaudu sisään</h4>
+  <form action="/login" method="POST">
+    <p>Käyttäjätunnus:<br>
+      <input type="text" name="username">
+    </p>
+    <p>Salasana:<br>
+      <input type="password" name="password">
+    </p>
+    <input type="submit" value="Kirjaudu">
+  </form>
+  <p>Uusi käyttäjä? <a href="/signup">Luo tunnus FoodDiary-palveluun</a></p>
+  <a href="/">Etusivulle</a>
+</body>
+  
+{% endblock %}
