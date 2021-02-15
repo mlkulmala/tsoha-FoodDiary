@@ -4,41 +4,58 @@
 
 {% block content %}
 
-{% if session.username %}
-<p>Olet kirjautunut nimellä {{ session.username }}</p>
+{% if session.user_id %}
+<p>Olet kirjautunut nimellä {{ session.user_id }}</p>
 <a href="/logout">Kirjaudu ulos</a>
 {% else %}
 <a href="/login">Kirjaudu sisään</a>
-<a href="/sign_up">Luo käyttäjätunnus</a>
+<a href="/register">Luo tunnus</a>
 {% endif %}
 
 <body>
   <section class:"container">
      <div class="one">
         <h2>Tervetuloa pitämään ruokapäiväkirjaa</h2>
+        <p>Tänään on <span id="date"></span></p>
+        <script>
+          n =  new Date();
+          y = n.getFullYear();
+          m = n.getMonth() + 1;
+          d = n.getDate();
+          document.getElementById("date").innerHTML = d + "." + m + "." + y;
+        </script>
         <form action="/">
-          <label for="date">Tänään on:</label>
-          <input type="date" id="date" name="date">
-          <input type="submit" value="Lähetä">
+          <label for="meal">Valitse ateria:</label>
+          <input list="meals" name="meal">
+          <datalist id="meals">
+            <option value="Aamupala">
+            <option value="Lounas">
+            <option value="Välipala">
+            <option value="Päivällinen">
+            <option value="Iltapala">
+            <option value="Muu">
+          </datalist>
+        
+          <p>
+            Lisää ruoka:
+            <input type="text" id="food_list" onkeyup="searchFromList()" placeholder="Hae">
+          <ul id="my_food_list">
+            <li>Leipä</li>
+            <li>Omena</li>
+            <li>Maito</li>
+          </ul>  
+          <ul>  
+          {% for foodstuff in foodstuffs %}
+          <li>{{foodstuff["name"]}}</li>
+          {% endfor %}
+          </ul>
+          <p>
+            Lisää määrä:<br>
+            <input type="number" id="amount" name="amount" min="1" max="2000">
+            <input type="submit" value="Lisää ruokapäiväkirjaan">
+          </p>
+          
         </form>
-        <p>
-        Valitse ateria:
-        <p>
-        <input type="radio" name="meal" value="aamupala"> aamupala
-        <input type="radio" name="meal" value="lounas"> lounas
-        <input type="radio" name="meal" value="välipala"> välipala
-        <input type="radio" name="meal" value="illallinen"> illallinen
-        <input type="radio" name="meal" value="iltapala"> iltapala
-        <input type="radio" name="meal" value="muu"> muu
-        <p>
-        Lisää ruoka-aine:<br>
-        <textarea name="foodstuff" rows="1" cols="50"></textarea><br>
-        <input type="submit" value="Lisää ruokapäiväkirjaan"> 
-        <p> 
-        Lisää määrä:<br>
-        <textarea name="amount" rows="1" cols="50"></textarea><br>
-        <input type="submit" value="Lisää">
-        <p>
       </div>
      <div class="two">
        <h3>Päivän saldo</h3>
@@ -51,4 +68,28 @@
   
   </section>
 </body>
+
+<script>
+  function searchFromList() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById('food_list');
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("my_food_list");
+    li = ul.getElementsByTagName('li');
+
+    for (i = 0; i < li.length; i++) {
+      a = li[i].getElementsByTagName("a")[0];
+      txtValue = a.textContent || a.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        li[i].style.display = "";
+      } else {
+        li[i].style.display = "none";
+      }
+    }
+  }
+  function popup() {
+    var popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
+  }
+</script>
 {% endblock %}

@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block title %}Tunnuksen luominen{% endblock %}
+
+{% block content %}
+
+<body>
+  <h4>Luo uusi tunnus:</h4>
+  <form action="/register" method="POST">
+    <p>Tunnus:<br>
+      <input type="text" name="username">
+    </p>
+    <p>Salasana:<br>
+      <input type="password" name="password">  
+    </p>
+    <input type="submit" value="Luo tunnus">
+  </form>
+  <p>
+    <a href="/">Etusivulle</a>
+</body>  
+
+{% endblock %}
