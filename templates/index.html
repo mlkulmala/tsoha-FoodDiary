@@ -24,8 +24,9 @@
           d = n.getDate();
           document.getElementById("date").innerHTML = d + "." + m + "." + y;
         </script>
-        <form action="/">
-          <label for="meal">Valitse ateria:</label>
+        <br>
+        <form action="/" id="form1">
+          <label for="meal">Valitse ateria:</label><br>
           <input list="meals" name="meal">
           <datalist id="meals">
             <option value="Aamupala">
@@ -35,32 +36,33 @@
             <option value="Iltapala">
             <option value="Muu">
           </datalist>
-        
-          <p>
-            Lisää ruoka:
-            <input type="text" id="food_list" onkeyup="searchFromList()" placeholder="Hae">
-          <ul id="my_food_list">
-            <li>Leipä</li>
-            <li>Omena</li>
-            <li>Maito</li>
-          </ul>  
-          <ul>  
-          {% for foodstuff in foodstuffs %}
-          <li>{{foodstuff["name"]}}</li>
-          {% endfor %}
-          </ul>
-          <p>
-            Lisää määrä:<br>
-            <input type="number" id="amount" name="amount" min="1" max="2000">
-            <input type="submit" value="Lisää ruokapäiväkirjaan">
-          </p>
-          
         </form>
+
+        <form action="/food_search" id="form2">
+          <label for="food_search">Hae ruoka-ainetta:</label><br>
+          <input type="text" name="food_search" placeholder="Hae">
+          <input type="submit" value="Hae">
+        </form>
+         
+        <label for="amount">Annoksen koko (g):</label><br>
+        <input type="number" id="amount" name="amount" min="1" max="2000" form="form1"><br>
+        <input type="submit" value="Lisää ruokapäiväkirjaan">
+        
+        <p>Valitsit aterialle {{meal}} ruoka-aineen {{food}}, jota
+           söit yhteensä {{amount}} grammaa.
+        </p>
+        
+        
+
+
       </div>
-     <div class="two">
-       <h3>Päivän saldo</h3>
-        <P>Tavoite -- kcal
-        <p>Syömättä -- kcal
+      <div class="two">
+        <h3>Päivän saldo</h3>
+        <p>Energian viitteellinen päiväsaanti lasketaan tiedoilla:<br>
+          <b>Aikuinen keskivertokäyttäjä 2000 kcal.</b>
+        </p>
+        <P>Tavoite __ /2000 kcal</P>
+        <p>Syömättä -- kcal</p>
       </div>
   
 
@@ -87,9 +89,6 @@
       }
     }
   }
-  function popup() {
-    var popup = document.getElementById("myPopup");
-    popup.classList.toggle("show");
-  }
 </script>
+
 {% endblock %}
