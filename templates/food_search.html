@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block title %}Haku{% endblock %}
+
+
+{% block content %}
+
+{% if session.user_id %}
+<p>Olet kirjautunut nimellä {{ session.user_id }}</p>
+<a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<a href="/login">Kirjaudu sisään</a>
+<a href="/register">Luo tunnus</a>
+{% endif %}
+
+<body>
+    <section class:"container">
+       <div class="one">
+          <h2>Haun tulokset:</h2>
+
+          <form action="/">
+            <p>Valitse</p>
+            {{food_name}}
+            {% for foodstuff in foodstuffs %}  
+            <input type="radio" name="foodstuff" value={{foodstuff[1]}}>
+            <label for="{{foodstuff[1]}}">{{foodstuff[1]}}</label><br>
+            {% endfor %}
+          </form>
+
+          <form action="/">
+            <input type="submit" value="Takaisin">
+          </form>
+          
+  
+  
+        </div>
+        <div class="two">
+          <h3>Päivän saldo</h3>
+          <p>Energian viitteellinen päiväsaanti lasketaan tiedoilla:<br>
+            <b>Aikuinen keskivertokäyttäjä 2000 kcal.</b>
+          </p>
+          <P>Tavoite __ /2000 kcal</P>
+          <p>Syömättä -- kcal</p>
+        </div>
+
+    </section>
+  </body>
+  
+ 
+  
+  {% endblock %}
