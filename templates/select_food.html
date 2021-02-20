@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block title %}Haku{% endblock %}
+
+
+{% block content %}
+
+{% if session.user_id %}
+<p>Olet kirjautunut nimellä {{ session.user_id }}</p>
+<a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<a href="/login">Kirjaudu sisään</a>
+<a href="/register">Luo tunnus</a>
+{% endif %}
+
+<body>
+    <section class:"container">
+       <div class="one">
+          <p>Haulla "{{food_name}}" löytyi seuraavat elintarvikkeet (valitse):</p>
+            
+          <form action="/" method="GET"> 
+            {% for foodstuff in foodstuffs %}
+            <input type="radio" name="foodstuff" value={{foodstuff.id}}> 
+            <label for="{{foodstuff.name}}">{{foodstuff.name}}</label><br>
+            {% endfor %}
+
+            <label for="meal">Mihin ateriaan lisätään:</label><br>
+            <input list="meals" name="meal">
+            <datalist id="meals">
+              <option value="Aamupala">
+              <option value="Lounas">
+              <option value="Välipala">
+              <option value="Päivällinen">
+              <option value="Iltapala">
+              <option value="Muu">
+            </datalist>
+            <br>
+            <label for="amount">Annoksen koko (g):</label><br>
+            <input type="number" id="amount" name="amount" min="1" max="2000"><br>
+            <input type="submit" value="Lisää ruokapäiväkirjaan">
+          </form>
+          <a href="/">Takaisin hakuun</a>
+        </div>
+
+        <div class="two">
+          <h3>Päivän saldo</h3>
+          <p>Energian viitteellinen päiväsaanti lasketaan tiedoilla:<br>
+            <b>Aikuinen keskivertokäyttäjä 2000 kcal.</b>
+          </p>
+          <P>Tavoite __ /2000 kcal</P>
+          <p>Syömättä -- kcal</p>
+        </div>
+
+    </section>
+  </body>
+  
+ 
+  
+  {% endblock %}
