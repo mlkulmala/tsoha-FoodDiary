@@ -1,29 +1,37 @@
-from app import app
-from flask import redirect, render_template, request
-import users, foodstuffs
+from app import app 
+from flask import redirect, render_template, request 
+import users, foodstuffs, fooddiaries
 
-@app.route("/", methods=["GET"])
+@app.route("/")
 def index():
+    user_id = users.user_id()
+    portions = []
+    foodstuff = None
     meal = None
-    food = None
     amount = None
-    diary_portions = []
-    error = None
     if request.args:
+        foodstuff = request.args["foodstuff"]
         meal = request.args["meal"]
-        food = request.args["food_search"]
         amount = request.args["amount"]
-    else:
-        error = "Tietoja puuttuu"
-    return render_template("index.html", meal=meal, food=food, amount=amount, error=error) 
+        if user_id != 0:
+            portions = fooddiaries.add_to_diary(user_id, foodstuff, meal, amount)
+    return render_template("index.html", foodstuff=foodstuff, meal=meal, amount=amount, portions=portions)
 
-@app.route("/food_search", methods=["GET"])
-def search():
-    food_name = request.args["food_search"]
+
+@app.route("/select_food", methods=["GET"])
+def select_food():
+    food_name = request.args["searched_food"]
     foodlist = foodstuffs.get_foodstuff_by_name(food_name)
-    # foodlist = foodstuffs.get_foodstuffs()
-    # jos tuloksia yli 10, pyydä tarkentamaan hakua
-    return render_template("food_search.html", food_name=food_name, foodstuffs=foodlist)
+    return render_template("select_food.html", food_name=food_name, foodstuffs=foodlist)
+
+@app.route("/add_portion", methods=["GET"])
+def add_portion():
+    user_id = users.user_id()
+    if user_id != 0:
+        fooddiaries.add_to_diary(user_id, date, foodstuff, meal, amount)
+    return redirect("/")
+
+
 
 @app.route("/login", methods=["GET","POST"])
 def login():
