@@ -1,5 +1,5 @@
 from app import app 
-from flask import redirect, render_template, request 
+from flask import redirect, render_template, request, session 
 import users, foodstuffs, fooddiaries, utils
 
 @app.route("/", methods=["GET"])
@@ -32,6 +32,7 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
+        session["username"] = username
         if users.login(username, password):
             return redirect("/")
         else:
