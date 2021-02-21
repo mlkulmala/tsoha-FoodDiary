@@ -38,7 +38,7 @@
           <p>Päivän saldo:</p>
           <table width="600" cellspacing="0" cellpadding="0">
             <tr>
-              <th width="300">Nimi</th>
+              <th width="300"></th>
               <th width="50">g</th>
               <th width="50">kcal</th>
               <th width="50">rasva</th>
@@ -49,7 +49,7 @@
             {% for portion in portions %}
             {% if loop.first or (loop.previtem is defined and portion[0] > loop.previtem[0]) %}
               <tr>
-                <td><b>{{portion[1]}}</b></td>
+                <td colspan="7"><b>{{portion[1]}}</b></td>
               </tr>
               <tr>
                 <td>{{portion[2]}}</td>
