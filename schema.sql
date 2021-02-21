@@ -14,8 +14,8 @@ CREATE TABLE Personal_details (
     gender_id INTEGER REFERENCES Gender,
     age INTEGER,
     height INTEGER,
-    weight INTEGER,
-    activity NUMERIC
+    weight DECIMAL,
+    activity DECIMAL
 );
 CREATE TABLE Food_diaries (
     id SERIAL PRIMARY KEY,
@@ -32,10 +32,10 @@ CREATE TABLE Foodstuffs (
     id SERIAL PRIMARY KEY,
     name TEXT,
     calories INTEGER,
-    fat INTEGER,
-    carbs INTEGER,
-    protein INTEGER,
-    fiber INTEGER
+    fat DECIMAL,
+    carbs DECIMAL,
+    protein DECIMAL,
+    fiber DECIMAL
 );
 CREATE TABLE Portions (
     id SERIAL PRIMARY KEY,
