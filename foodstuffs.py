@@ -7,8 +7,8 @@ def get_foodstuffs():
     return result.fetchall()
 
 def get_foodstuff_by_name(food_name):
-    sql = "SELECT name FROM foodstuffs WHERE name LIKE '%food_name%'"
-    result = db.session.execute(sql)
+    sql = "SELECT * FROM foodstuffs WHERE name ILIKE :name"
+    result = db.session.execute(sql, {"name":'%%'+food_name+'%%'})
     return result.fetchall()
 
 def dictionary(foodstuff):
