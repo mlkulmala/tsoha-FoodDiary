@@ -15,29 +15,34 @@
 <body>
     <section class:"container">
        <div class="one">
-          <p>Haulla "{{food_name}}" löytyi seuraavat elintarvikkeet (valitse):</p>
-            
-          <form action="/" method="GET"> 
-            {% for foodstuff in foodstuffs %}
-            <input type="radio" name="foodstuff" value={{foodstuff.id}}> 
-            <label for="{{foodstuff.name}}">{{foodstuff.name}}</label><br>
-            {% endfor %}
-
-            <label for="meal">Mihin ateriaan lisätään:</label><br>
-            <input list="meals" name="meal">
-            <datalist id="meals">
-              <option value="Aamupala">
-              <option value="Lounas">
-              <option value="Välipala">
-              <option value="Päivällinen">
-              <option value="Iltapala">
-              <option value="Muu">
-            </datalist>
-            <br>
-            <label for="amount">Annoksen koko (g):</label><br>
-            <input type="number" id="amount" name="amount" min="1" max="2000"><br>
-            <input type="submit" value="Lisää ruokapäiväkirjaan">
-          </form>
+          {% if foodstuffs|length %}
+            <p>Haulla "{{food_name}}" löytyi seuraavat elintarvikkeet (valitse):</p>
+              
+            <form action="/" method="GET"> 
+              {% for foodstuff in foodstuffs %}
+              <input type="radio" name="foodstuff" value={{foodstuff.id}}> 
+              <label for="{{foodstuff.name}}">{{foodstuff.name}}</label><br>
+              {% endfor %}
+              <br>
+              <label for="meal">Mihin ateriaan lisätään:</label><br>
+              <input list="meals" name="meal">
+              <datalist id="meals">
+                <option value="Aamupala">
+                <option value="Lounas">
+                <option value="Välipala">
+                <option value="Päivällinen">
+                <option value="Iltapala">
+                <option value="Muu">
+              </datalist>
+              <br>
+              <label for="amount">Annoksen koko (g):</label><br>
+              <input type="number" id="amount" name="amount" min="1" max="2000"><br>
+              <input type="submit" value="Lisää ruokapäiväkirjaan">
+            </form>
+          {% else %}
+            <p>Haulla "{{food_name}}" ei löytynyt yhtään elintarviketta.<br>
+            Kokeile toisella hakusanalla.</p>
+          {% endif %}
           <a href="/">Takaisin hakuun</a>
         </div>
 

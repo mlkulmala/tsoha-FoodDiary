@@ -5,7 +5,7 @@
 {% block content %}
 
 {% if session.user_id %}
-<p>Olet kirjautunut nimellä {{ session.user_id }}</p>
+<p>Olet kirjautunut nimellä {{session.username}}</p>
 <a href="/logout">Kirjaudu ulos</a>
 {% else %}
 <a href="/login">Kirjaudu sisään</a>
@@ -15,6 +15,8 @@
 <body>
   <section class:"container">
      <div class="one">
+        {% if session.user_id %}
+        {% endif %}
         <h2>Tervetuloa pitämään ruokapäiväkirjaa</h2>
         <p>Tänään on <span id="date"></span></p>
         <script>
@@ -25,37 +27,55 @@
           document.getElementById("date").innerHTML = d + "." + m + "." + y;
         </script>
         <br>
-        <form action="/" id="form1">
-          <label for="meal">Valitse ateria:</label><br>
-          <input list="meals" name="meal">
-          <datalist id="meals">
-            <option value="Aamupala">
-            <option value="Lounas">
-            <option value="Välipala">
-            <option value="Päivällinen">
-            <option value="Iltapala">
-            <option value="Muu">
-          </datalist>
-        </form>
-
-        <form action="/food_search" id="form2">
-          <label for="food_search">Hae ruoka-ainetta:</label><br>
-          <input type="text" name="food_search" placeholder="Hae">
+        <form action="/select_food" methods="GET">
+          <label for="searched_food">Hae ruoka-ainetta:</label><br>
+          <input type="text" name="searched_food" placeholder="Hae">
           <input type="submit" value="Hae">
         </form>
-         
-        <label for="amount">Annoksen koko (g):</label><br>
-        <input type="number" id="amount" name="amount" min="1" max="2000" form="form1"><br>
-        <input type="submit" value="Lisää ruokapäiväkirjaan">
-        
-        <p>Valitsit aterialle {{meal}} ruoka-aineen {{food}}, jota
-           söit yhteensä {{amount}} grammaa.
-        </p>
-        
-        
 
-
+        <! Jos portions' ei ole tyhjä: >
+        {% if portions|length %}
+          <p>Päivän saldo:</p>
+          <table width="600" cellspacing="0" cellpadding="0">
+            <tr>
+              <th width="300">Nimi</th>
+              <th width="50">g</th>
+              <th width="50">kcal</th>
+              <th width="50">rasva</th>
+              <th width="50">hiilihydr.</th>
+              <th width="50">proteiini</th>
+              <th width="50">kuitu</th>
+            </tr>
+            {% for portion in portions %}
+            {% if loop.first or (loop.previtem is defined and portion[0] > loop.previtem[0]) %}
+              <tr>
+                <td><b>{{portion[1]}}</b></td>
+              </tr>
+              <tr>
+                <td>{{portion[2]}}</td>
+                <td>{{portion[3]}}</td>
+                <td>{{portion[4]}}</td>
+                <td>{{portion[5]}}</td>
+                <td>{{portion[6]}}</td>
+                <td>{{portion[7]}}</td>
+                <td>{{portion[8]}}</td>
+              </tr>
+            {% else %}
+              <tr>
+                <td>{{portion[2]}}</td>
+                <td>{{portion[3]}}</td>
+                <td>{{portion[4]}}</td>
+                <td>{{portion[5]}}</td>
+                <td>{{portion[6]}}</td>
+                <td>{{portion[7]}}</td>
+                <td>{{portion[8]}}</td>
+              </tr>
+            {% endif %}
+            {% endfor %}
+          </table>
+        {% endif %}
       </div>
+
       <div class="two">
         <h3>Päivän saldo</h3>
         <p>Energian viitteellinen päiväsaanti lasketaan tiedoilla:<br>
