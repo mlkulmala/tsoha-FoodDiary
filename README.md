@@ -24,4 +24,4 @@ käyttämään tietokantaan voi lisätä uusia ruoka-aineita.
 
 Sovellus on  nähtävissä [Herokussa](https://tsoha-fooddiary.herokuapp.com/).
 
-Tällä hetkellä päiväkirjamerkintöjen lisääminen onnistuu vain kirjautuneena. Useimmat toiminnallisuudet puuttuvat edelleen.
+Tällä hetkellä päiväkirjamerkintöjen lisääminen onnistuu **vain kirjautuneelle käyttäjälle**. Useimmat toiminnallisuudet puuttuvat edelleen.
