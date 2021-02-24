@@ -10,6 +10,7 @@ def add_to_diary(user_id, foodstuff_id, meal_id, amount):
         "VALUES (:diary_id, :foodstuff_id, :meal_id, :amount)"
     db.session.execute(sql_portions, {"diary_id":diary_id, "foodstuff_id":foodstuff_id, "meal_id":meal_id, "amount":amount})
     db.session.commit()
+    return True
 
 def get_todays_diary(user_id):
     sql = "SELECT meals.id, meals.name, foodstuffs.name, amount, calories, " \
@@ -22,3 +23,10 @@ def get_todays_diary(user_id):
     result = db.session.execute(sql, {"user_id":user_id})
     return result.fetchall()
 
+def get_total_calories(user_id):
+    sql = "SELECT SUM(calories) FROM foodstuffs " \
+        "INNER JOIN portions ON (portions.foodstuff_id = foodstuffs.id) " \
+        "INNER JOIN food_diaries ON (food_diaries.id = portions.diary_id) " \
+        "WHERE user_id=:user_id AND date = current_date"
+    result = db.session.execute(sql, {"user_id":user_id})
+    return result.fetchone()[0]
