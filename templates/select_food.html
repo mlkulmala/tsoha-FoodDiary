@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layout_nav.html" %}
 {% block title %}Haku{% endblock %}
 
 
@@ -18,7 +18,7 @@
           {% if foodstuffs|length %}
             <p>Haulla "{{food_name}}" löytyi seuraavat elintarvikkeet (valitse):</p>
               
-            <form action="/" method="GET"> 
+            <form action="/diary_entry" method="GET"> 
               {% for foodstuff in foodstuffs %}
               <input type="radio" name="foodstuff" value={{foodstuff.id}}> 
               <label for="{{foodstuff.name}}">{{foodstuff.name}}</label><br>
@@ -43,7 +43,7 @@
             <p>Haulla "{{food_name}}" ei löytynyt yhtään elintarviketta.<br>
             Kokeile toisella hakusanalla.</p>
           {% endif %}
-          <a href="/">Takaisin hakuun</a>
+          <a href="/food_search">Takaisin hakuun</a>
         </div>
 
         <div class="two">

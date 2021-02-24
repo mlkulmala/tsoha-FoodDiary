@@ -1,0 +1,24 @@
+{% extends "layout_nav.html" %}
+{% block title %}Omat tiedot{% endblock %}
+
+{% block content %}
+
+
+
+<body>
+    <h2>Profiilisi</h2>
+    <p>Antamiesi tietojen pohjalta arvio energiantarpeestasi on xxxx (lsää laskukaava!)</p><br>
+    <h3>Perustiedot</h3>
+    <p>Sukupuoli: {{details[0]}}</p>
+    <p>Ikä: {{details[1]}}</p>
+    <p>Pituus: {{details[2]}}</p>
+    <p>Paino: {{details[3]}}</p>
+    <p>Aktiivisuus: {{details[4]}} (tälle selitys! Luo uusi tietokantataulu?)</p>
+
+    <form action="/food_search">
+      <input type="submit" value=" Jatka " />
+    </form>
+
+</body>
+
+{% endblock %}

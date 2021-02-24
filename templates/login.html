@@ -4,14 +4,12 @@
 {% block content %}
 
 <body>
-  <h4>Kirjaudu sisään</h4>
+  <h3>Kirjaudu sisään</h3>
   <form action="/login" method="POST">
-    <p>Tunnus:<br>
-      <input type="text" name="username">
-    </p>
-    <p>Salasana:<br>
-      <input type="password" name="password">
-    </p>
+    Tunnus:<br>
+    <input type="text" name="username"><br>
+    Salasana:<br>
+    <input type="password" name="password"><br>
     <input type="submit" value="Kirjaudu">
   </form>
   <p>Uusi käyttäjä? <a href="/register">Luo tunnus FoodDiary-palveluun</a></p>

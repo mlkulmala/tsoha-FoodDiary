@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> FoodDiary - {% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="static/css/main.css">
+</head>
+
+<body>
+    <div class="navigation">
+      <div class="title">
+        <ul>
+          <h1>&emsp;FoodDiary</h1> 
+          {% if session.user_id %}
+            <li style="float:right"><a href="/profile/{{session.user_id}}" class="navigation_link"><b>OMAT TIEDOT</b></a></li>
+            <li style="float:right"><a href="/logout" class="navigation_link"><b>KIRJAUDU ULOS</b></a></li>
+          {% else %}
+            <li style="float:right"><a href="/login" class="navigation_link"><b>KIRJAUDU SISÄÄN</b></a></li>
+          {% endif %}
+  
+        </ul>
+      </div>
+    </div>
+    
+    {% block content %}{% endblock %}
+  </body>

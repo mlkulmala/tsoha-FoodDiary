@@ -1,0 +1,97 @@
+{% extends "layout_nav.html" %}
+{% block title %}Haku{% endblock %}
+
+
+{% block content %}
+
+{% if session.user_id %}
+<p>Olet kirjautunut nimellä {{session.username}}</p>
+<a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<a href="/login">Kirjaudu sisään</a>
+<a href="/register">Luo tunnus</a>
+{% endif %}
+
+<body>
+  <section class:"container">
+     <div class="one">
+        {% if session.user_id %}
+        {% endif %}
+        <h2>Ruokapäiväkirja</h2>
+        <p>Tänään on <span id="date"></span></p>
+        <script>
+          n =  new Date();
+          y = n.getFullYear();
+          m = n.getMonth() + 1;
+          d = n.getDate();
+          document.getElementById("date").innerHTML = d + "." + m + "." + y;
+        </script>
+        <br>
+        <form action="/select_food" methods="GET">
+          <label for="searched_food">Hae ruoka-ainetta:</label><br>
+          <input type="text" name="searched_food" placeholder="Hae">
+          <input type="submit" value="Hae">
+        </form>
+
+        <! Jos portions' ei ole tyhjä: >
+        {% if portions|length %}
+          <p>Päivän saldo:</p>
+          <table width="600" cellspacing="0" cellpadding="0">
+            <tr>
+              <th width="200"></th>
+              <th width="50">g</th>
+              <th width="50">kcal</th>
+              <th width="50">rasva</th>
+              <th width="50">hiilihydr.</th>
+              <th width="50">proteiini</th>
+              <th width="50">kuitu</th>
+            </tr>
+            {% for portion in portions %}
+            {% if loop.first or (loop.previtem is defined and portion[0] > loop.previtem[0]) %}
+            <tr>
+              <td colspan="7"><b>{{portion[1]}}</b></td>
+            </tr>
+            <tr>
+              <td>{{portion[2]}}</td>
+              <td>{{portion[3]}}</td>
+              <td>{{portion[4]}}</td>
+              <td>{{portion[5]}}</td>
+              <td>{{portion[6]}}</td>
+              <td>{{portion[7]}}</td>
+              <td>{{portion[8]}}</td>
+            </tr>
+            {% else %}
+            <tr>
+              <td>{{portion[2]}}</td>
+              <td>{{portion[3]}}</td>
+              <td>{{portion[4]}}</td>
+              <td>{{portion[5]}}</td>
+              <td>{{portion[6]}}</td>
+              <td>{{portion[7]}}</td>
+              <td>{{portion[8]}}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+          </table>
+        {% endif %}
+      </div>
+
+      <div class="two">
+        <h3>Päivän saldo</h3>
+        <p>Energian viitteellinen päiväsaanti lasketaan tiedoilla:<br>
+          <b>Aikuinen keskivertokäyttäjä 2000 kcal.</b>
+        </p>
+        <P>Syöty {{total_calories}} /2000 kcal</P>
+        <p>Syömättä  kcal</p>
+      </div>
+  
+
+
+  
+  </section>
+</body>
+
+
+
+{% endblock %}
+
