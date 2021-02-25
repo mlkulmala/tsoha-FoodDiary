@@ -20,8 +20,8 @@ CREATE TABLE Personal_details (
 CREATE TABLE Food_diaries (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES Users,
-    diarydate DATE NOT NULL DEFAULT CURRENT_DATE,
-    calorie_intake INTEGER,
+    date DATE NOT NULL DEFAULT CURRENT_DATE,
+    calorie_goal INTEGER,
     use_of_energy INTEGER
 );
 CREATE TABLE Meals (
