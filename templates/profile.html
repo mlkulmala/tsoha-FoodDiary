@@ -3,22 +3,21 @@
 
 {% block content %}
 
-
-
-<body>
-    <h2>Profiilisi</h2>
-    <p>Antamiesi tietojen pohjalta arvio energiantarpeestasi on xxxx (lsää laskukaava!)</p><br>
-    <h3>Perustiedot</h3>
-    <p>Sukupuoli: {{details[0]}}</p>
-    <p>Ikä: {{details[1]}}</p>
-    <p>Pituus: {{details[2]}}</p>
-    <p>Paino: {{details[3]}}</p>
-    <p>Aktiivisuus: {{details[4]}} (tälle selitys! Luo uusi tietokantataulu?)</p>
-
-    <form action="/food_search">
-      <input type="submit" value=" Jatka " />
+  <h2>Profiilisi</h2>
+  <p>Antamiesi tietojen pohjalta arvio energiantarpeestasi on {{calorie_goal}} kcal/vrk.
+    <form action="/create_profile">
+      <input type="submit" value="Muuta tietoja">
     </form>
+  </p><br>
+  <h3>Perustiedot</h3>
+  <p>Sukupuoli: {{details[0]}}</p>
+  <p>Ikä: {{details[1]}}</p>
+  <p>Pituus: {{details[2]}}</p>
+  <p>Paino: {{details[3]}}</p>
+  <p>Aktiivisuus: {{details[4]}} (tälle selitys! Luo uusi tietokantataulu?)</p>
 
-</body>
+  <form action="/food_search">
+    <input type="submit" value=" Jatka ">
+  </form>
 
 {% endblock %}
