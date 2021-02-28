@@ -1,8 +1,9 @@
 body {
-  font-family: 'Arial', 'Helvetica', sans-serif;
+  font-family: 'Cambria', 'Georgia';
+  font-size: 12pt;
   margin: 0 auto;
   padding: 20px;
-  max-width: 50em;
+  max-width: 800px;
 }
 
 .centered {
@@ -10,30 +11,57 @@ body {
   padding: 40px 150px;
 }
 
+.p1 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11pt;
+  line-height: 1.6;
+}
+
+.p2 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13pt;
+}
+
+.p3 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
+  font-size: 10pt;
+}
+
+span.number {
+  color: #11be8a;
+  font-weight: bold;
+  font-size: x-large;
+}
+
 h1 {
+  font-family: Arial, Helvetica, sans-serif;
   margin-top: 1em;
   color: white;
 }
 
+h2, h3 {
+  font-family: Arial, Helvetica, sans-serif;
+}
 
 
 .container {
-  width: 80%;
+  width: 90%;
   margin: auto;
-  padding: 10px;
+  padding: 20px;
 }
 
 .one {
-  width: 500px;
+  width: 400px;
   float: left;
 }
 
 .two {
-  margin-left: 600px;
-  padding: 10px;
+  margin-left: 500px;
+  padding: 15px;
   margin-top: 2em;
-  background: #11be8a;
-  color: white;
+  border: 1px solid darkgray;
+  border-radius: 5px;
 }
 
 
@@ -52,6 +80,7 @@ ul {
 
 li {
   float: left;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 li a {
@@ -59,6 +88,8 @@ li a {
   color: white;
   text-align: center;
   padding: 14px 16px;
+  text-transform: uppercase;
+  font-size: smaller;
   text-decoration: none;
 }
 
