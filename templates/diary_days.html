@@ -1,0 +1,78 @@
+{% extends "layout_nav.html" %}
+{% block title %}Selaa päiväkirjaa{% endblock %}
+
+{% block content %}
+
+
+
+<body>
+  <section class:"container">
+    <div class="one">
+      <h2>Arkisto</h2>
+      <form action="/diary_days" methods="GET">
+        <label for="diary_date">Hae ruokapäiväkirjaa päivämäärällä:</label><br>
+        <input type="date" name="diary_date" id="diary_date">
+        <input type="submit" value="Hae">
+      </form>
+  
+
+      {% if portions|length %}
+        <p>Päivän saldo:</p>
+        <table width="600" cellspacing="0" cellpadding="0">
+          <tr>
+            <th width="200"></th>
+            <th width="30">g</th>
+            <th width="30">kcal</th>
+            <th width="30">rasva</th>
+            <th width="30">hiilihydr.</th>
+            <th width="30">proteiini</th>
+            <th width="30">kuitu</th>
+          </tr>
+          {% for portion in portions %}
+          {% if loop.first or (loop.previtem is defined and portion[0] > loop.previtem[0]) %}
+          <tr>
+            <td colspan="7"><b>{{portion[1]}}</b></td>
+          </tr>
+          <tr>
+            <td>{{portion[2]}}</td> 
+            <td>{{portion[3]}}</td>
+            <td>{{portion[4]}}</td>
+            <td>{{portion[5]}}</td>
+            <td>{{portion[6]}}</td>
+            <td>{{portion[7]}}</td>
+            <td>{{portion[8]}}</td>
+          </tr>
+          {% else %}
+          <tr>
+            <td>{{portion[2]}}</td>
+            <td>{{portion[3]}}</td>
+            <td>{{portion[4]}}</td>
+            <td>{{portion[5]}}</td>
+            <td>{{portion[6]}}</td>
+            <td>{{portion[7]}}</td>
+            <td>{{portion[8]}}</td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+        </table>
+      {% else %}
+        <p>Ei merkintöjä tältä päivältä.</p>
+      {% endif %}
+    </div>
+
+    <div class="two">
+      <h3>Yhteenveto</h3>
+      <p class="p1">
+        <span class="number"><b>{{kcal}} </span>/ {{calorie_goal}}</b> kcal/vrk.<br>
+      </p>
+      <p class="p1">Ravintoaineiden osuudet kokonaisenergiasta:<br>
+        <b>Rasva:</b> {{fat}} % (suositus 30 %)<br>
+        <b>Hiilihydraatit:</b> {{carbs}} % (suositus 55-60 %)<br>
+        <b>Proteiini:</b> {{pro}} % (suositus 10-15 %)<br>
+        <b>Kuitu:</b> {{fiber}} g (suositus 30-35 g/vrk)
+      </P>
+    </div>
+
+</body>
+
+{% endblock %}
