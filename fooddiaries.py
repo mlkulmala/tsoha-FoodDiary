@@ -23,13 +23,13 @@ def create_new_diary(user_id):
 
 
 def get_todays_diary(user_id):
-    sql = "SELECT meals.id, meals.name, foodstuffs.name, amount, calories, " \
+    sql = "SELECT portions.id, meals.id, meals.name, foodstuffs.name, amount, calories, " \
         "fat, carbs, protein, fiber FROM food_diaries " \
         "INNER JOIN portions ON (food_diaries.id = portions.diary_id) " \
         "INNER JOIN foodstuffs ON (portions.foodstuff_id = foodstuffs.id) " \
         "INNER JOIN meals ON (meals.id = portions.meal_id) " \
         "WHERE user_id=:user_id AND date = current_date " \
-        "ORDER BY meals.id, meals.name"
+        "ORDER BY meals.id"
     result = db.session.execute(sql, {"user_id":user_id})
     return result.fetchall()
 
@@ -40,7 +40,7 @@ def get_diary_by_date(user_id, date):
         "INNER JOIN foodstuffs ON (portions.foodstuff_id = foodstuffs.id) " \
         "INNER JOIN meals ON (meals.id = portions.meal_id) " \
         "WHERE user_id=:user_id AND date=:date " \
-        "ORDER BY date DESC, meals.id, meals.name"
+        "ORDER BY date DESC, meals.id"
     result = db.session.execute(sql, {"user_id":user_id, "date":date})
     return result.fetchall()
 
@@ -71,3 +71,17 @@ def get_calories_and_nutrients(user_id, date):
         fiber = round(total_fiber)
         values = [kcal, fat, carbs, pro, fiber]
         return values
+
+def delete_portion(id):
+    sql = "DELETE FROM portions WHERE id=:id"
+    db.session.execute(sql, {"id":id})
+    db.session.commit()
+    return True
+
+def get_portion(id):
+    sql = "SELECT meals.name, foodstuffs.name, amount FROM portions " \
+        "INNER JOIN foodstuffs ON foodstuffs.id = portions.foodstuff_id " \
+        "INNER JOIN meals ON meals.id = portions.meal_id " \
+        "WHERE portions.id=:id"
+    result = db.session.execute(sql, {"id":id})
+    return result.fetchone()
