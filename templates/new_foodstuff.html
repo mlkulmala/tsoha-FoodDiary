@@ -1,0 +1,34 @@
+{% extends "layout_nav.html" %}
+{% block title %}Omat tiedot{% endblock %}
+
+{% block content %}
+<body>
+  <h2>Lisää oma ruoka-aine</h2>
+  <form action="/add_foodstuff" method="POST">
+    <label for="name">Nimi/kuvaus (esim. Saaristolaisnappi, Perheleipuri Salonen):</label>
+    <input type="text" id="name" name="name" size="50" required><br>
+    <p>Ilmoita ravintosisältöjen arvot 100g:aa kohti.</p>
+    <label for="kcal">Energiaa (kcal):</label>
+    <input type="number" id="kcal" name="kcal" min="1" max="1000" required><br>
+
+    <label for="fat">Rasvaa:</label>
+    <input type="number" id="fat" name="fat" min="0" max="100" step=".01" required>
+ 
+    <label for="carbs">&emsp;Hiilihydraatteja:</label>
+    <input type="number" id="carbs" name="carbs" min="0" max="100" step="0.1" required><br>
+
+    <label for="pro">Proteiinia:</label>
+    <input type="number" id="pro" name="pro" min="0" max="100" step="0.1" required>
+
+    <label for="fiber">&emsp;Kuituja:</label>
+    <input type="number" id="fiber" name="fiber" min="0" max="100" step="0.1" required><br>
+
+    <input type="submit" value="Lisää">
+    <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
+
+  </form>
+</body>
+
+
+{% endblock %}
+

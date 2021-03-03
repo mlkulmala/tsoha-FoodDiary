@@ -1,0 +1,19 @@
+{% extends "layout_nav.html" %}
+{% block title %}Omat ruoka-aineet{% endblock %}
+
+{% block content %}
+
+<body>
+  {% if not error: %}
+    <p>Ruoan "{{name}}" lisääminen listaan onnistui. <br>
+    Löydät sen ruoka-aineiden hausta jatkossakin.</p>
+      
+  {% else: %}
+    <p>Ruoan "{{name}}" lisääminen ei onnistunut.</p>  
+  {% endif %}
+  <form action="/food_search">
+    <input type="submit" value="Takaisin">
+  </form>
+</body>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block title %}Poista merkintä{% endblock %}
+
+{% block content %}
+
+
+
+<body>
+    <p>Poistaanko ruoka aterialta {{meal}}<br>
+        {{name}}, {{amount}}g?
+    </p>
+    <form action="/delete" methods="POST">
+      <input type="hidden" name="portion_id" value={{portion_id}}>
+      <input type="submit" value="Kyllä">
+      <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
+    </form>
+    <form action="/food_search">
+        <input type="submit" value="Ei">
+    </form>
+    
+</body>
+
+
+{% endblock %}
