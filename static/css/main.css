@@ -52,14 +52,15 @@ h2, h3 {
 }
 
 .one {
-  width: 400px;
+  width: 450px;
   float: left;
 }
 
 .two {
   margin-left: 500px;
+  min-width: 150px;
   padding: 15px;
-  margin-top: 2em;
+  margin-top: 20px;
   border: 1px solid darkgray;
   border-radius: 5px;
 }
@@ -101,7 +102,7 @@ li a:hover:not(.active) {
   background-color: #216fd4;
 }
 
-.button {
+.button1 {
   background-color: #11be8a;
   border: none; 
   color: white;
@@ -109,7 +110,18 @@ li a:hover:not(.active) {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 12pt;
+}
+
+.button2 {
+  background: none!important;
+  border: none!important;
+  color: #11be8a!important;
+  padding: 0!important;
+  margin-bottom: 0px;
+  text-align: center;
+  display: inline!important;
+  font-size: 10pt;
 }
 
 input {
