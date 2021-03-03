@@ -16,12 +16,12 @@
               
             <form action="/diary_entry" method="POST"> 
               {% for foodstuff in foodstuffs %}
-              <input type="radio" name="foodstuff" value={{foodstuff.id}}> 
+              <input type="radio" name="foodstuff" value={{foodstuff.id}} required> 
               <label for="{{foodstuff.name}}">{{foodstuff.name}}</label><br>
               {% endfor %}
               <br>
               <label for="meal">Mihin ateriaan lisätään:</label><br>
-              <input list="meals" name="meal">
+              <input list="meals" name="meal" required>
               <datalist id="meals">
                 <option value="Aamupala">
                 <option value="Lounas">
@@ -32,14 +32,24 @@
               </datalist>
               <br>
               <label for="amount">Annoksen koko (g):</label><br>
-              <input type="number" id="amount" name="amount" min="1" max="2000"><br>
-              <input type="submit" value="Lisää ruokapäiväkirjaan">
+              <input type="number" id="amount" name="amount" min="1" max="2000" required><br>
+              <input type="submit" value="Lisää ruokapäiväkirjaan" class="button1">
+              <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
             </form>
           {% else %}
             <p>Haulla "{{food_name}}" ei löytynyt yhtään elintarviketta.<br>
             Kokeile toisella hakusanalla.</p>
+            <form action="/food_search">
+              <input type="submit" value="Takaisin hakuun">
+            </form><br>
+            <p>Voit myös lisätä suosikkiruokalajisi, -ruoka-aineesi<br>
+              tai -tuotteesi tiedot, jolloin löydät sen seuraavalla kerralla.</p>
+            <form action="/new_foodstuff">
+              <input type="submit" value="Lisää oma ruoka">
+            </form>
+          
           {% endif %}
-          <a href="/food_search">Takaisin hakuun</a>
+
         </div>
 
        
