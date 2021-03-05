@@ -45,10 +45,5 @@ def password_qualified(password):
     return False
 
 
-def has_profile(user_id):
-    sql = "SELECT id FROM personal_details WHERE user_id=:user_id"
-    result = db.session.execute(sql, {"user_id":user_id})
-    if (result.fetchone() == None):
-        return False
-    return True
+
 
