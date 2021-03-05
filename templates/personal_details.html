@@ -4,16 +4,30 @@
 {% block content %}
 
 <body>
-  <h2>Tervetuloa FoodDiaryn käyttäjäksi!</h2>
+  <h2>Kalorintarpeen arviointi</h2>
   <p>Kirjaamalla itsestäsi muutamia perustietoja FoodDiary laskee arvion 
-        päivittäisestä energian tarpeestasi. Muuten arvio perustuu aikuisen keskivertokäyttäjän 
-        tarpeeseen, joka on n. 2000 kcal/vrk.</p>
-  <p>Pääset muuttamaan tietoja myöhemmin kohdasta Omat tiedot.</p>
+    päivittäisestä energian tarpeestasi. Voit myös asettaa oman tavoitteen 
+    päivittäin syömällesi kalorimäärälle. 
+  </p>
+  <p>Jos et täytä perustietoja tai aseta omaa tavoitetta, sovellus
+    arvio päivittäiseksi kaloritarpeeksi 2000 kcal / vrk, joka on laskettu suomalaisen 
+    aikuisen keskivertokäyttäjän mukaan.
+  </p>
+  <p>Pääset muuttamaan tietojasi myöhemmin kohdasta Omat tiedot.</p>
   {% if message|length %}
   <span style="font-weight: bold">{{message}}</span>
   {% endif %}
   <br>
+  <form action="/add_goal" methods="POST">
+    <label for="goal">Aseta tavoite (kcal):</label>
+    <input type="number" name="goal" min="1300" max="6000" required>
+    <input type="submit" value="Tallenna">
+    <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
+  </form>
   <form action="/add_details" method="POST">
+    <label for="goal">Aseta tavoite (kcal):</label>
+    <input type="number" name="goal" min="1300" max="6000">
+
     <input type="radio" name="gender" value="1" checked> 
     <label for="1">Nainen</label>
     <input type="radio" name="gender" value="2"> 
@@ -104,7 +118,7 @@
       </tr>
     </table>
 
-    <input type="submit" value="Jatka">
+    <input type="submit" value="Tallenna">
     <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
   </form>
 

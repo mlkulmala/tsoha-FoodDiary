@@ -4,26 +4,20 @@
 
 {% block content %}
 
-{% if session.user_id %}
-<p>Olet kirjautunut nimellä {{session.username}}</p>
-{% endif %}
-
 <body>
   <section class:"container">
      <div class="one">
-        {% if session.user_id %}
-        {% endif %}
         <h2>Ruokapäiväkirja</h2>
         <p>Tänään on <span id="date"></span></p>
         <br>
         <form action="/select_food" methods="GET">
-          <label for="searched_food">Hae ruoka-ainetta:</label><br>
+          <label for="searched_food"><h4>Hae ruoka-ainetta:</h4></label>
           <input type="text" name="searched_food" placeholder="Hae" required>
           <input type="submit" value="Hae">
         </form>
 
         {% if portions|length %}
-          <p>Päivän saldo:</p>
+          <h4>Päivän saldo:</h4>
           <table width="800" cellspacing="0" cellpadding="0">
             <tr>
               <th width="300"></th>

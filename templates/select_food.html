@@ -4,15 +4,11 @@
 
 {% block content %}
 
-{% if session.user_id %}
-<p>Olet kirjautunut nimellä {{session.username}}</p>
-{% endif %}
-
 <body>
     <section class:"container">
        <div class="one">
           {% if foodstuffs|length %}
-            <p>Haulla "{{food_name}}" löytyi seuraavat elintarvikkeet (valitse):</p>
+            <p class="p4">Haulla "{{food_name}}" löytyi seuraavat elintarvikkeet (valitse):</p>
               
             <form action="/diary_entry" method="POST"> 
               {% for foodstuff in foodstuffs %}
@@ -36,19 +32,23 @@
               <input type="submit" value="Lisää ruokapäiväkirjaan" class="button1">
               <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
             </form>
+            <p class="p4">Ei mikään näistä? Kokeile toisella hakusanalla.</p>
           {% else %}
-            <p>Haulla "{{food_name}}" ei löytynyt yhtään elintarviketta.<br>
-            Kokeile toisella hakusanalla.</p>
-            <form action="/food_search">
-              <input type="submit" value="Takaisin hakuun">
-            </form><br>
-            <p>Voit myös lisätä suosikkiruokalajisi, -ruoka-aineesi<br>
-              tai -tuotteesi tiedot, jolloin löydät sen seuraavalla kerralla.</p>
-            <form action="/new_foodstuff">
-              <input type="submit" value="Lisää oma ruoka">
-            </form>
-          
+            <p>Haulla "{{food_name}}" ei löytynyt yhtään elintarviketta.</p>
           {% endif %}
+          
+          <form action="/food_search">
+            <input type="submit" value="Takaisin hakuun">
+          </form>
+          <p class="p4">Voit myös lisätä suosikkiruokalajisi, -ruoka-aineesi<br>
+              tai -tuotteesi tiedot, jolloin löydät sen seuraavalla kerralla.</p>
+          <form action="/new_foodstuff">
+            <input type="submit" value="Lisää oma ruoka">
+          </form>
+          
+          
+          
+            
 
         </div>
 

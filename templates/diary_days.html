@@ -11,13 +11,13 @@
       <h2>Arkisto</h2>
       <form action="/diary_days" methods="GET">
         <label for="diary_date">Hae ruokapäiväkirjaa päivämäärällä:</label><br>
-        <input type="date" name="diary_date" id="diary_date">
+        <input type="date" name="diary_date" id="diary_date" value="{{date}}">
         <input type="submit" value="Hae" class="button1">
       </form>
   
 
       {% if portions|length %}
-        <p>Päivän saldo:</p>
+        <h4>Päivän saldo:</h4>
         <table width="600" cellspacing="0" cellpadding="0">
           <tr>
             <th width="200"></th>
