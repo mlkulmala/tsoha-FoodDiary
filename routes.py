@@ -59,7 +59,7 @@ def search():
     carbs = total[2]
     pro = total[3]
     fiber = total[4]
-    calorie_goal = persons.get_calorie_goal(user_id)
+    calorie_goal = fooddiaries.get_todays_goal(user_id)
     kcal_left = calorie_goal - kcal
     return render_template("food_search.html", portions=portions, calorie_goal=calorie_goal, \
          kcal=kcal, fat=fat, carbs=carbs, pro=pro, fiber=fiber, kcal_left=kcal_left)
@@ -88,7 +88,6 @@ def diary_entry():
             return render_template("error.html", message="Lisäys ruokapäiväkirjaan ei onnistunut.")
     return render_template("error.html", message="Tarkista, että teit kaikki valinnat.")
 
-
 @app.route("/create_profile")
 def create_profile():
     return render_template("personal_details.html")
@@ -100,25 +99,32 @@ def add_details():
         if (session["csrf_token"] != request.form["csrf_token"]):
             return abort(403)
         gender_id = request.form["gender"]
-        gender = persons.get_gender(gender_id)
         age = request.form["age"]
         height = request.form["height"]
         weight = request.form["weight"]
         activity = request.form["activity"]
-        persons.add_calorie_goal(user_id, gender_id, age, height, weight, activity)
-        if users.has_profile(user_id):
-            if persons.update_personal_details(user_id, gender_id, age, height, weight, activity):
-                return redirect("/profile/"+str(user_id))
         if persons.add_personal_details(user_id, gender_id, age, height, weight, activity):
             return redirect("/profile/"+str(user_id))
         else:
-            return render_template("error.html", message="Tietojen lisääminen ei onnistunut")
+            return render_template("error.html", message="Tietojen lisääminen ei onnistunut.")
     return render_template("personal_details.html")
+
+@app.route("/add_goal", methods=["POST"])
+def add_goal():
+    user_id = users.user_id()
+    if (session["csrf_token"] != request.form["csrf_token"]):
+        return abort(403)
+    personal_goal = request.form["goal"]
+    if persons.add_personal_goal(personal_goal):
+        return redirect("/profile/"+str(user_id))
+    else:
+        return render_template("error.html", message="Tavoitteen lisääminen ei onnistunut.")
+
 
 @app.route("/profile/<int:id>")
 def profile(id):
     details = persons.get_personal_details(id)
-    calorie_goal = persons.get_calorie_goal(id)
+    calorie_goal = persons.get_personal_goal(id)
     return render_template("profile.html", details=details, calorie_goal=calorie_goal)
 
 @app.route("/diary_days", methods=["GET"])
@@ -134,10 +140,10 @@ def diary_days():
     carbs = total[2]
     pro = total[3]
     fiber = total[4]
-    calorie_goal = persons.get_calorie_goal(user_id)
+    calorie_goal = fooddiaries.get_calorie_goal_by_date(user_id, date)
     portions = fooddiaries.get_diary_by_date(user_id, date)
     return render_template("diary_days.html", portions=portions, calorie_goal=calorie_goal, \
-         kcal=kcal, fat=fat, carbs=carbs, pro=pro, fiber=fiber)
+         kcal=kcal, fat=fat, carbs=carbs, pro=pro, fiber=fiber, date=date)
 
 @app.route("/get_diaries", methods=["POST"])
 def get_diaries():
@@ -149,7 +155,7 @@ def get_diaries():
     carbs = total[2]
     pro = total[3]
     fiber = total[4]
-    calorie_goal = persons.get_calorie_goal(user_id)
+    calorie_goal = fooddiaries.get_calorie_goal(user_id, date)
     portions = fooddiaries.get_diary_by_date(user_id, date)
     return render_template("diary_days.html", portions=portions, calorie_goal=calorie_goal, \
          kcal=kcal, fat=fat, carbs=carbs, pro=pro, fiber=fiber)
@@ -189,4 +195,4 @@ def add_foodstuff():
     if foodstuffs.add_foodstuff(name, kcal, fat, carbs, pro, fiber, user_id):
         return render_template("foodstuff_added.html", name=name, error=False)
     else:
-        return render_template("foodstuff_added.html", name=name, error=True)
+        return render_template("foodstuff_added.html", name=name, error=True, message="Tietojen tallentaminen ei onnistunut.")
