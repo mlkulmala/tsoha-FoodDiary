@@ -16,12 +16,13 @@ CREATE TABLE Personal_details (
     height INTEGER,
     weight DECIMAL,
     activity DECIMAL,
-    calorie_goal INTEGER
+    personal_goal INTEGER
 );
 CREATE TABLE Food_diaries (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES Users,
-    date DATE NOT NULL DEFAULT CURRENT_DATE
+    date DATE NOT NULL DEFAULT CURRENT_DATE,
+    calorie_goal INTEGER
 );
 CREATE TABLE Meals (
     id SERIAL PRIMARY KEY,
@@ -36,7 +37,7 @@ CREATE TABLE Foodstuffs (
     protein DECIMAL,
     fiber DECIMAL,
     added_by INTEGER REFERENCES Users,
-    visible BOOLEAN
+    visible BOOLEAN
 );
 CREATE TABLE Portions (
     id SERIAL PRIMARY KEY,
