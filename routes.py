@@ -115,7 +115,7 @@ def add_goal():
     if (session["csrf_token"] != request.form["csrf_token"]):
         return abort(403)
     personal_goal = request.form["goal"]
-    if persons.add_personal_goal(personal_goal):
+    if persons.add_personal_goal(user_id, personal_goal):
         return redirect("/profile/"+str(user_id))
     else:
         return render_template("error.html", message="Tavoitteen lisääminen ei onnistunut.")
