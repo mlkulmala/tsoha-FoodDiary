@@ -1,4 +1,5 @@
 from db import db
+import persons
 
 
 def add_to_diary(user_id, foodstuff_id, meal_id, amount):
@@ -6,6 +7,7 @@ def add_to_diary(user_id, foodstuff_id, meal_id, amount):
     result = db.session.execute(sql, {"user_id":user_id})
     row = result.fetchone()
     if row == None:
+        # ei vielä merkintöjä kyseiseltä päivältä - ei silloin myöskään tavoitetta
         diary_id = create_new_diary(user_id)
     else:
         diary_id = row[0]
@@ -16,11 +18,51 @@ def add_to_diary(user_id, foodstuff_id, meal_id, amount):
     return True
 
 def create_new_diary(user_id):
-    sql = "INSERT INTO food_diaries (user_id) VALUES (:user_id) RETURNING id"
-    result = db.session.execute(sql, {"user_id":user_id})
+    # tarkistetaan, onko henkilö asettanut tavoitteen
+    calorie_goal = persons.get_personal_goal(user_id)
+    if calorie_goal == None:
+        if persons.has_profile(user_id):
+            details = persons.get_personal_details(user_id)
+            gender = details[0]
+            age = details[1]
+            height = details[2]
+            weight = details[3]
+            activity = details[4]
+            calorie_goal = persons.count_calorie_goal(gender, age, height, weight, activity)
+        else:
+            calorie_goal = 2000
+    sql = "INSERT INTO food_diaries (user_id, calorie_goal) VALUES (:user_id, :calorie_goal) RETURNING id"
+    result = db.session.execute(sql, {"user_id":user_id, "calorie_goal":calorie_goal})
     db.session.commit()
     return result.fetchone()[0]
 
+def get_todays_goal(user_id):
+    sql = "SELECT calorie_goal FROM food_diaries WHERE user_id=:user_id AND date = current_date"
+    result = db.session.execute(sql, {"user_id":user_id}).fetchone()
+    if result == None:
+        calorie_goal = persons.get_personal_goal(user_id) # palauttaa None tai oikean arvon
+        if calorie_goal == None:
+            if persons.has_profile(user_id):
+                details = persons.get_personal_details(user_id)
+                gender =  details[0]
+                age = details[1]
+                height = details[2]
+                weight = details[3]
+                activity = details[4]
+                calorie_goal = persons.count_calorie_goal(gender, age, height, weight, activity)
+            else:
+                calorie_goal = 2000
+    else:
+        calorie_goal = result[0]
+    return calorie_goal
+
+def get_calorie_goal_by_date(user_id, date):
+    sql = "SELECT calorie_goal FROM food_diaries WHERE user_id=:user_id AND date=:date"
+    result = db.session.execute(sql, {"user_id":user_id, "date":date})
+    calorie_goal = result.fetchone()
+    if calorie_goal == None:
+        return None
+    return calorie_goal[0]
 
 def get_todays_diary(user_id):
     sql = "SELECT portions.id, meals.id, meals.name, foodstuffs.name, amount, calories, " \
