@@ -1,7 +1,7 @@
 body {
   font-family: 'Cambria', 'Georgia';
   font-size: 12pt;
-  margin: 0 auto;
+  margin: auto;
   padding: 20px;
   max-width: 800px;
 }
@@ -28,6 +28,10 @@ body {
   font-size: 10pt;
 }
 
+.p4 {
+  margin-top: 50px;
+}
+
 span.number {
   color: #11be8a;
   font-weight: bold;
@@ -40,7 +44,7 @@ h1 {
   color: white;
 }
 
-h2, h3 {
+h2, h3, h4 {
   font-family: Arial, Helvetica, sans-serif;
 }
 
