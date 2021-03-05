@@ -24,10 +24,8 @@
     <input type="submit" value="Tallenna">
     <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
   </form>
-  <form action="/add_details" method="POST">
-    <label for="goal">Aseta tavoite (kcal):</label>
-    <input type="number" name="goal" min="1300" max="6000">
-
+  <br>
+  <form action="/add_details" methods="POST">
     <input type="radio" name="gender" value="1" checked> 
     <label for="1">Nainen</label>
     <input type="radio" name="gender" value="2"> 
