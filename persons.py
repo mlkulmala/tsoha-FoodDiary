@@ -55,7 +55,7 @@ def add_personal_details(user_id, gender_id, age, height, weight, activity):
     return True
 
 def update_personal_details(user_id, gender_id, age, height, weight, activity):
-    calorie_goal = count_calorie_goal(user_id, gender_id, age, height, weight, activity)
+    calorie_goal = count_calorie_goal(gender_id, age, height, weight, activity)
     sql = "UPDATE personal_details SET gender_id=:gender_id, age=:age, height=:height, weight=:weight, " \
         "activity=:activity, calorie_goal=:calorie_goal WHERE user_id=:user_id"
     result = db.session.execute(sql, {"user_id":user_id, "gender_id":gender_id, "age":age, \
