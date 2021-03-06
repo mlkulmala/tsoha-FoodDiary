@@ -1,6 +1,6 @@
 from db import db
 from flask import session
-
+import fooddiaries
 
 
 
@@ -22,8 +22,11 @@ def get_personal_goal(user_id):
 
 def get_goal_priority(user_id):
     sql = "SELECT goal_priority FROM personal_details WHERE user_id=:user_id"
-    result = db.session.execute(sql, {"user_id":user_id}).fetchone()[0]
-    return result
+    result = db.session.execute(sql, {"user_id":user_id}).fetchone()
+    if result == None:
+        return None
+    else:
+        return result[0]
 
 def set_goal_priority(user_id, priority):
     sql = "UPDATE personal_details SET goal_priority=:goal_priority WHERE user_id=:user_id"
@@ -38,6 +41,7 @@ def add_personal_goal(user_id, goal):
         sql = "INSERT INTO personal_details (user_id, personal_goal) VALUES (:user_id, :personal_goal)"
         db.session.execute(sql, {"user_id":user_id, "personal_goal":goal})
         db.session.commit()
+    fooddiaries.update_todays_goal(user_id, goal)
     return True
 
 def update_personal_goal(user_id, goal):
@@ -49,9 +53,10 @@ def update_personal_goal(user_id, goal):
 def has_profile(user_id):
     sql = "SELECT id FROM personal_details WHERE user_id=:user_id"
     result = db.session.execute(sql, {"user_id":user_id})
-    if (result.fetchone() == None):
+    if result.fetchone() == None:
         return False
-    return True
+    else:
+        return True
 
 def add_personal_details(user_id, gender_id, age, height, weight, activity):
     if has_profile(user_id):
@@ -62,6 +67,8 @@ def add_personal_details(user_id, gender_id, age, height, weight, activity):
         db.session.execute(sql, {"user_id":user_id, "gender_id":gender_id, "age":age, \
             "height":height, "weight":weight, "activity":activity})
         db.session.commit()
+    calorie_goal = count_calorie_goal(gender_id, age, height, weight, activity)
+    fooddiaries.update_todays_goal(user_id, calorie_goal)
     return True
 
 def update_personal_details(user_id, gender_id, age, height, weight, activity):
@@ -84,13 +91,16 @@ def count_calorie_goal(gender_id, age, height, weight, activity):
 
 def count_calorie_goal_by_id(user_id):
     details = get_personal_details(user_id)
-    gender_id = details[0]
-    age = details[1]
-    height = details[2]
-    weight = details[3]
-    activity = details[4]
-    calorie_goal = count_calorie_goal(gender_id, age, height, weight, activity)
-    return calorie_goal
+    if details == None:
+        return None
+    else:
+        gender_id = details[0]
+        age = details[1]
+        height = details[2]
+        weight = details[3]
+        activity = details[4]
+        calorie_goal = count_calorie_goal(gender_id, age, height, weight, activity)
+        return calorie_goal
 
 def get_gender(gender_id):
     sql = "SELECT gender FROM gender WHERE id=:gender_id"

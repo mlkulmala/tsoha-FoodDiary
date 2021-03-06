@@ -43,7 +43,7 @@ def create_new_diary(user_id):
 def update_todays_goal(user_id, calorie_goal):
     if diary_exists(user_id):
         sql = "UPDATE food_diaries SET calorie_goal=:calorie_goal WHERE user_id=:user_id AND date = current_date"
-        db.session.execute(sql, {"user_id":user_id})
+        db.session.execute(sql, {"user_id":user_id, "calorie_goal":calorie_goal})
         db.session.commit()
         return True
     else:
@@ -60,7 +60,7 @@ def get_todays_goal(user_id):
         return result[0]
     elif persons.get_goal_priority(user_id):
         calorie_goal = persons.get_personal_goal(user_id) # palauttaa None tai oikean arvon
-    elif persons.has_profile:
+    elif persons.has_profile(user_id):
         calorie_goal = persons.count_calorie_goal_by_id(user_id)
     else:
         calorie_goal = 2000

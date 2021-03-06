@@ -126,16 +126,20 @@ def add_goal():
 @app.route("/profile/<int:id>")
 def profile(id):
     user_id = users.user_id()
-    details = persons.get_personal_details(id)
-    goal_priority = persons.get_goal_priority(id)
+    details = persons.get_personal_details(user_id)
+    goal_priority = persons.get_goal_priority(user_id)
     personal_goal = persons.get_personal_goal(user_id)
     if not goal_priority:
         priority = False
     else:
         priority = True
-    calorie_goal = persons.count_calorie_goal_by_id(id)
+    calorie_goal = persons.count_calorie_goal_by_id(user_id)
+    if calorie_goal == None:
+        profile = False
+    else:
+        profile = True
     return render_template("profile.html", details=details, personal_goal=personal_goal, \
-        calorie_goal=calorie_goal, priority=priority)
+        calorie_goal=calorie_goal, priority=priority, profile=profile)
 
 @app.route("/diary_days", methods=["GET"])
 def diary_days():
