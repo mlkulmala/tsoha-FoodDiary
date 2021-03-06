@@ -32,8 +32,6 @@ def register():
     if request.method == "GET":
         return render_template("register.html")
     if request.method == "POST":
-        if (session["csrf_token"] != request.form["csrf_token"]):
-            return abort(403)
         username = request.form["username"]
         password = request.form["password"]
         password_val = request.form["validate_password"]
@@ -90,7 +88,10 @@ def diary_entry():
 
 @app.route("/create_profile")
 def create_profile():
-    return render_template("personal_details.html")
+    user_id = users.user_id()
+    goal = persons.get_personal_goal(user_id)
+    details = persons.get_personal_details(user_id)
+    return render_template("personal_details.html", goal=goal, details=details)
 
 @app.route("/add_details", methods=["POST"])
 def add_details():
@@ -103,7 +104,8 @@ def add_details():
         height = request.form["height"]
         weight = request.form["weight"]
         activity = request.form["activity"]
-        if persons.add_personal_details(user_id, gender_id, age, height, weight, activity):
+        if persons.add_personal_details(user_id, gender_id, age, height, weight, activity) \
+            and persons.set_goal_priority(user_id, False):
             return redirect("/profile/"+str(user_id))
         else:
             return render_template("error.html", message="Tietojen lisääminen ei onnistunut.")
@@ -115,7 +117,7 @@ def add_goal():
     if (session["csrf_token"] != request.form["csrf_token"]):
         return abort(403)
     personal_goal = request.form["goal"]
-    if persons.add_personal_goal(user_id, personal_goal):
+    if persons.add_personal_goal(user_id, personal_goal) and persons.set_goal_priority(user_id, True):
         return redirect("/profile/"+str(user_id))
     else:
         return render_template("error.html", message="Tavoitteen lisääminen ei onnistunut.")
@@ -123,9 +125,17 @@ def add_goal():
 
 @app.route("/profile/<int:id>")
 def profile(id):
+    user_id = users.user_id()
     details = persons.get_personal_details(id)
-    calorie_goal = persons.get_personal_goal(id)
-    return render_template("profile.html", details=details, calorie_goal=calorie_goal)
+    goal_priority = persons.get_goal_priority(id)
+    personal_goal = persons.get_personal_goal(user_id)
+    if not goal_priority:
+        priority = False
+    else:
+        priority = True
+    calorie_goal = persons.count_calorie_goal_by_id(id)
+    return render_template("profile.html", details=details, personal_goal=personal_goal, \
+        calorie_goal=calorie_goal, priority=priority)
 
 @app.route("/diary_days", methods=["GET"])
 def diary_days():
@@ -140,8 +150,8 @@ def diary_days():
     carbs = total[2]
     pro = total[3]
     fiber = total[4]
-    calorie_goal = fooddiaries.get_calorie_goal_by_date(user_id, date)
     portions = fooddiaries.get_diary_by_date(user_id, date)
+    calorie_goal = fooddiaries.get_calorie_goal_by_date(user_id, date)
     return render_template("diary_days.html", portions=portions, calorie_goal=calorie_goal, \
          kcal=kcal, fat=fat, carbs=carbs, pro=pro, fiber=fiber, date=date)
 
@@ -155,15 +165,14 @@ def get_diaries():
     carbs = total[2]
     pro = total[3]
     fiber = total[4]
-    calorie_goal = fooddiaries.get_calorie_goal(user_id, date)
     portions = fooddiaries.get_diary_by_date(user_id, date)
+    calorie_goal = portions[9]
     return render_template("diary_days.html", portions=portions, calorie_goal=calorie_goal, \
          kcal=kcal, fat=fat, carbs=carbs, pro=pro, fiber=fiber)
 
 @app.route("/remove_from_diary", methods=["GET"])
 def remove_from_diary():
     portion_id = request.args["remove"]
-    print(portion_id)
     selected = fooddiaries.get_portion(portion_id)
     meal= selected[0]
     name = selected[1]

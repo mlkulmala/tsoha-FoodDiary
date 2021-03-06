@@ -2,33 +2,36 @@ from db import db
 import persons
 
 
+def diary_exists(user_id):
+    sql = "SELECT id FROM food_diaries WHERE user_id=:user_id AND date = current_date"
+    result = db.session.execute(sql, {"user_id":user_id}).fetchone()
+    if result == None:
+        return False
+    return True
+
+
 def add_to_diary(user_id, foodstuff_id, meal_id, amount):
     sql = "SELECT id FROM food_diaries WHERE user_id=:user_id AND date = current_date"
-    result = db.session.execute(sql, {"user_id":user_id})
-    row = result.fetchone()
-    if row == None:
-        # ei vielä merkintöjä kyseiseltä päivältä - ei silloin myöskään tavoitetta
+    result = db.session.execute(sql, {"user_id":user_id}).fetchone()
+    if result == None:
         diary_id = create_new_diary(user_id)
     else:
-        diary_id = row[0]
+        diary_id = result[0]
     sql_portions = "INSERT INTO portions (diary_id, foodstuff_id, meal_id, amount)" \
         "VALUES (:diary_id, :foodstuff_id, :meal_id, :amount)"
     db.session.execute(sql_portions, {"diary_id":diary_id, "foodstuff_id":foodstuff_id, "meal_id":meal_id, "amount":amount})
     db.session.commit()
     return True
 
+
 def create_new_diary(user_id):
     # tarkistetaan, onko henkilö asettanut tavoitteen
-    calorie_goal = persons.get_personal_goal(user_id)
-    if calorie_goal == None:
+    priority = persons.get_goal_priority(user_id)
+    if priority:
+        calorie_goal = persons.get_personal_goal
+    else:
         if persons.has_profile(user_id):
-            details = persons.get_personal_details(user_id)
-            gender = details[0]
-            age = details[1]
-            height = details[2]
-            weight = details[3]
-            activity = details[4]
-            calorie_goal = persons.count_calorie_goal(gender, age, height, weight, activity)
+            calorie_goal = persons.count_calorie_goal_by_id(user_id)
         else:
             calorie_goal = 2000
     sql = "INSERT INTO food_diaries (user_id, calorie_goal) VALUES (:user_id, :calorie_goal) RETURNING id"
@@ -36,26 +39,35 @@ def create_new_diary(user_id):
     db.session.commit()
     return result.fetchone()[0]
 
-def get_todays_goal(user_id):
-    sql = "SELECT calorie_goal FROM food_diaries WHERE user_id=:user_id AND date = current_date"
-    result = db.session.execute(sql, {"user_id":user_id}).fetchone()
-    if result == None:
-        calorie_goal = persons.get_personal_goal(user_id) # palauttaa None tai oikean arvon
-        if calorie_goal == None:
-            if persons.has_profile(user_id):
-                details = persons.get_personal_details(user_id)
-                gender =  details[0]
-                age = details[1]
-                height = details[2]
-                weight = details[3]
-                activity = details[4]
-                calorie_goal = persons.count_calorie_goal(gender, age, height, weight, activity)
-            else:
-                calorie_goal = 2000
+
+def update_todays_goal(user_id, calorie_goal):
+    if diary_exists(user_id):
+        sql = "UPDATE food_diaries SET calorie_goal=:calorie_goal WHERE user_id=:user_id AND date = current_date"
+        db.session.execute(sql, {"user_id":user_id})
+        db.session.commit()
+        return True
     else:
-        calorie_goal = result[0]
+        sql_entry = "INSERT INTO food_diaries (user_id, calorie_goal) VALUES (:user_id, :calorie_goal)"
+        db.session.execute(sql_entry, {"user_id":user_id, "calorie_goal":calorie_goal})
+        db.session.commit()
+        return True
+
+
+def get_todays_goal(user_id):
+    if diary_exists(user_id):
+        sql = "SELECT calorie_goal FROM food_diaries WHERE user_id=:user_id AND date = current_date"
+        result = db.session.execute(sql, {"user_id":user_id}).fetchone()
+        return result[0]
+    elif persons.get_goal_priority(user_id):
+        calorie_goal = persons.get_personal_goal(user_id) # palauttaa None tai oikean arvon
+    elif persons.has_profile:
+        calorie_goal = persons.count_calorie_goal_by_id(user_id)
+    else:
+        calorie_goal = 2000
     return calorie_goal
 
+
+# tarvitaanko tätä? sisältyy metodiin get_diary_by_date()
 def get_calorie_goal_by_date(user_id, date):
     sql = "SELECT calorie_goal FROM food_diaries WHERE user_id=:user_id AND date=:date"
     result = db.session.execute(sql, {"user_id":user_id, "date":date})
@@ -63,6 +75,7 @@ def get_calorie_goal_by_date(user_id, date):
     if calorie_goal == None:
         return None
     return calorie_goal[0]
+
 
 def get_todays_diary(user_id):
     sql = "SELECT portions.id, meals.id, meals.name, foodstuffs.name, amount, calories, " \
@@ -74,6 +87,7 @@ def get_todays_diary(user_id):
         "ORDER BY meals.id"
     result = db.session.execute(sql, {"user_id":user_id})
     return result.fetchall()
+
 
 def get_diary_by_date(user_id, date):
     sql = "SELECT meals.id, meals.name, foodstuffs.name, amount, "\
@@ -114,11 +128,13 @@ def get_calories_and_nutrients(user_id, date):
         values = [kcal, fat, carbs, pro, fiber]
         return values
 
+
 def delete_portion(id):
     sql = "DELETE FROM portions WHERE id=:id"
     db.session.execute(sql, {"id":id})
     db.session.commit()
     return True
+
 
 def get_portion(id):
     sql = "SELECT meals.name, foodstuffs.name, amount FROM portions " \

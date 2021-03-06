@@ -20,6 +20,17 @@ def get_personal_goal(user_id):
     else:
         return result[0]
 
+def get_goal_priority(user_id):
+    sql = "SELECT goal_priority FROM personal_details WHERE user_id=:user_id"
+    result = db.session.execute(sql, {"user_id":user_id}).fetchone()[0]
+    return result
+
+def set_goal_priority(user_id, priority):
+    sql = "UPDATE personal_details SET goal_priority=:goal_priority WHERE user_id=:user_id"
+    db.session.execute(sql, {"user_id":user_id, "goal_priority":priority })
+    db.session.commit()
+    return True
+
 def add_personal_goal(user_id, goal):
     if has_profile(user_id):
         update_personal_goal(user_id, goal)
@@ -31,7 +42,7 @@ def add_personal_goal(user_id, goal):
 
 def update_personal_goal(user_id, goal):
     sql = "UPDATE personal_details SET personal_goal=:personal_goal WHERE user_id=:user_id"
-    result = db.session.execute(sql, {"personal_goal":goal, "user_id":user_id})
+    db.session.execute(sql, {"personal_goal":goal, "user_id":user_id})
     db.session.commit()
     return True
 
@@ -46,20 +57,18 @@ def add_personal_details(user_id, gender_id, age, height, weight, activity):
     if has_profile(user_id):
         update_personal_details(user_id, gender_id, age, height, weight, activity)
     else:
-        calorie_goal = count_calorie_goal(user_id, gender_id, age, height, weight, activity)
-        sql = "INSERT INTO personal_details (user_id, gender_id, age, height, weight, activity, calorie_goal) " \
-            "VALUES (:user_id, :gender_id, :age, :height, :weight, :activity, :calorie_goal)"
+        sql = "INSERT INTO personal_details (user_id, gender_id, age, height, weight, activity) " \
+            "VALUES (:user_id, :gender_id, :age, :height, :weight, :activity)"
         db.session.execute(sql, {"user_id":user_id, "gender_id":gender_id, "age":age, \
-            "height":height, "weight":weight, "activity":activity, "calorie_goal":calorie_goal})
+            "height":height, "weight":weight, "activity":activity})
         db.session.commit()
     return True
 
 def update_personal_details(user_id, gender_id, age, height, weight, activity):
-    calorie_goal = count_calorie_goal(gender_id, age, height, weight, activity)
     sql = "UPDATE personal_details SET gender_id=:gender_id, age=:age, height=:height, weight=:weight, " \
-        "activity=:activity, calorie_goal=:calorie_goal WHERE user_id=:user_id"
+        "activity=:activity WHERE user_id=:user_id"
     result = db.session.execute(sql, {"user_id":user_id, "gender_id":gender_id, "age":age, \
-        "height":height, "weight":weight, "activity":activity, "calorie_goal":calorie_goal})
+        "height":height, "weight":weight, "activity":activity})
     db.session.commit()
     return True
 
@@ -75,7 +84,13 @@ def count_calorie_goal(gender_id, age, height, weight, activity):
 
 def count_calorie_goal_by_id(user_id):
     details = get_personal_details(user_id)
-    
+    gender_id = details[0]
+    age = details[1]
+    height = details[2]
+    weight = details[3]
+    activity = details[4]
+    calorie_goal = count_calorie_goal(gender_id, age, height, weight, activity)
+    return calorie_goal
 
 def get_gender(gender_id):
     sql = "SELECT gender FROM gender WHERE id=:gender_id"
