@@ -106,7 +106,7 @@ def add_details():
         activity = request.form["activity"]
         if persons.add_personal_details(user_id, gender_id, age, height, weight, activity) \
             and persons.set_goal_priority(user_id, False):
-            return redirect("/profile/"+str(user_id))
+            return redirect("/profile")
         else:
             return render_template("error.html", message="Tietojen lisääminen ei onnistunut.")
     return render_template("personal_details.html")
@@ -118,13 +118,13 @@ def add_goal():
         return abort(403)
     personal_goal = request.form["goal"]
     if persons.add_personal_goal(user_id, personal_goal) and persons.set_goal_priority(user_id, True):
-        return redirect("/profile/"+str(user_id))
+        return redirect("/profile")
     else:
         return render_template("error.html", message="Tavoitteen lisääminen ei onnistunut.")
 
 
-@app.route("/profile/<int:id>")
-def profile(id):
+@app.route("/profile")
+def profile():
     user_id = users.user_id()
     details = persons.get_personal_details(user_id)
     goal_priority = persons.get_goal_priority(user_id)

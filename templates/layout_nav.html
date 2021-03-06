@@ -12,7 +12,7 @@
           <h1>&emsp;FoodDiary</h1> 
           {% if session.user_id %}
             <li style="float:right"><a href="/logout" class="navigation_link"><b>Kirjaudu ulos</b></a></li>
-            <li style="float:right"><a href="/profile/{{session.user_id}}" class="navigation_link"><b>Omat tiedot</b></a></li>
+            <li style="float:right"><a href="/profile" class="navigation_link"><b>Omat tiedot</b></a></li>
             <li style="float:right"><a href="/diary_days" class="navigation_link"><b>Arkisto</b></a></li>
             <li style="float:right"><a href="/food_search" class="navigation_link"><b>Ruokapäiväkirja</b></a></li>
           {% else %}
