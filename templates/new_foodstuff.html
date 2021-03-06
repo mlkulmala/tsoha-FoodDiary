@@ -7,7 +7,7 @@
   <form action="/add_foodstuff" method="POST">
     <label for="name">Nimi/kuvaus (esim. Saaristolaisnappi, Perheleipuri Salonen):</label>
     <input type="text" id="name" name="name" size="50" required><br>
-    <p>Ilmoita ravintosisältöjen arvot 100g:aa kohti. (Käytä desimaalierottimena pistettä.)</p>
+    <p>Ilmoita ravintosisältöjen arvot 100g:aa kohti.</p>
     <label for="kcal">Energiaa (kcal):</label>
     <input type="number" id="kcal" name="kcal" min="1" max="1000" required><br>
 
@@ -15,9 +15,9 @@
     <input type="number" id="fat" name="fat" min="0" max="100" step=".01" required>
  
     <label for="carbs">&emsp;Hiilihydraatteja:</label>
-    <input type="number" id="carbs" name="carbs" min="0" max="100" step="0.1" required><br>
+    <input type="number" id="carbs" name="carbs" min="0" max="100" step="0.1" required>
 
-    <label for="pro">Proteiinia:</label>
+    <label for="pro">&emsp;Proteiinia:</label>
     <input type="number" id="pro" name="pro" min="0" max="100" step="0.1" required>
 
     <label for="fiber">&emsp;Kuituja:</label>
