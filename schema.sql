@@ -10,13 +10,13 @@ CREATE TABLE Users (
 CREATE TABLE Personal_details (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES Users,
-    name TEXT,
     gender_id INTEGER REFERENCES Gender,
     age INTEGER,
     height INTEGER,
     weight DECIMAL,
     activity DECIMAL,
-    personal_goal INTEGER
+    personal_goal INTEGER,
+    goal_priority BOOLEAN
 );
 CREATE TABLE Food_diaries (
     id SERIAL PRIMARY KEY,
