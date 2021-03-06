@@ -7,21 +7,25 @@
   
   {% if priority: %}
     <p>Olet asettanut tavoitteeksi {{personal_goal}} kcal/vrk.</p>
-  {% else: %}
+  {% elif profile: %}
     <p>Arvio energiantarpeestasi on antamiesi tietojen pohjalta {{calorie_goal}} kcal/vrk.</p>
+  {% else: %}
+    <p>Haluatko asettaa päivittäisen kaloritavoitteen tai antaa itsestäsi tiedot,<br>
+    joiden perusteella sovellus laskee energiantarpeen?</p>
   {% endif %}
 
   <form action="/create_profile">
     <input type="submit" value="Muuta asetuksia">
   </form>
+  {% if profile: %}
   <h3>Perustiedot</h3>
   <p>Sukupuoli: <b>{{details[0]}} </b><br>
     Ikä:<b> {{details[1]}}</b><br>
-    Pituus:<b> {{details[2]}}</b><br>
-    Paino:<b> {{details[3]}}</b><br>
-    Aktiivisuus:<b> {{details[4]}}</b> 
+    Pituus:<b> {{details[2]}} cm</b><br>
+    Paino:<b> {{details[3]}} kg</b><br>
+    Aktiivisuustaso:<b> {{details[4]}}</b> 
   </p>
-
+  {% endif %}
   <form action="/food_search">
     <input type="submit" value=" Jatka ">
   </form>
