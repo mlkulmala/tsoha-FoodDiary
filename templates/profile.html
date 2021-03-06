@@ -4,18 +4,23 @@
 {% block content %}
 
   <h2>Profiilisi</h2>
-  <p>Antamiesi tietojen pohjalta arvio energiantarpeestasi on {{calorie_goal}} kcal/vrk.
-    <form action="/create_profile">
-      <input type="submit" value="Muuta tietoja">
-    </form>
-  </p><br>
   
+  {% if priority: %}
+    <p>Olet asettanut tavoitteeksi {{personal_goal}} kcal/vrk.</p>
+  {% else: %}
+    <p>Arvio energiantarpeestasi on antamiesi tietojen pohjalta {{calorie_goal}} kcal/vrk.</p>
+  {% endif %}
+
+  <form action="/create_profile">
+    <input type="submit" value="Muuta asetuksia">
+  </form>
   <h3>Perustiedot</h3>
-  <p>Sukupuoli: {{details[0]}}</p>
-  <p>Ikä: {{details[1]}}</p>
-  <p>Pituus: {{details[2]}}</p>
-  <p>Paino: {{details[3]}}</p>
-  <p>Aktiivisuus: {{details[4]}} (tälle selitys! Luo uusi tietokantataulu?)</p>
+  <p>Sukupuoli: <b>{{details[0]}} </b><br>
+    Ikä:<b> {{details[1]}}</b><br>
+    Pituus:<b> {{details[2]}}</b><br>
+    Paino:<b> {{details[3]}}</b><br>
+    Aktiivisuus:<b> {{details[4]}}</b> 
+  </p>
 
   <form action="/food_search">
     <input type="submit" value=" Jatka ">

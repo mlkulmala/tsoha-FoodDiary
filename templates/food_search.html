@@ -30,7 +30,7 @@
               <th width="30"></th>
             </tr>
             {% for portion in portions %}
-            {% if loop.first or (loop.previtem is defined and portion[0] > loop.previtem[0]) %}
+            {% if loop.first or (loop.previtem is defined and portion[1] > loop.previtem[1]) %}
             <tr>
               <td colspan="8"><b>{{portion[2]}}</b></td>
             </tr>

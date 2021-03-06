@@ -6,8 +6,8 @@
 
 
 <body>
-    <p>Poistaanko ruoka aterialta {{meal}}<br>
-        {{name}}, {{amount}}g?
+    <p>Poistaanko ruoka {{name}}, {{amount}}g <br>
+        aterialta {{meal}}?
     </p>
     <form action="/delete" methods="POST">
       <input type="hidden" name="portion_id" value={{portion_id}}>

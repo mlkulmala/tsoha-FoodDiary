@@ -9,12 +9,12 @@
     <p>{{message}}</p>
   {% endif %}
   <form action="/register" method="POST">
-    <p>Tunnus:<br>
+    <p>Tunnus:<br>      
       <input type="text" name="username">
     </p>
-    <p>Salasana:<br>
+    <p>Salasana:</p>
       <input type="password" name="password">  
-    </p>
+      <p class="p3">(Salasanassa on oltava vähintään yksi kutakin: numero, pieni kirjain ja iso kirjain.)</p>
     <p>Salasana uudelleen:<br>
       <input type="password" name="validate_password">  
     </p>

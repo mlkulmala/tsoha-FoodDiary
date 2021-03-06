@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layout_nav.html" %}
 {% block title %}Omat tiedot{% endblock %}
 
 {% block content %}
@@ -18,35 +18,36 @@
   <span style="font-weight: bold">{{message}}</span>
   {% endif %}
   <br>
-  <form action="/add_goal" methods="POST">
+  <h4>1. Aseta oma tavoite</h4>
+  <form action="/add_goal" method="POST">
     <label for="goal">Aseta tavoite (kcal):</label>
-    <input type="number" name="goal" min="1300" max="6000" required>
-    <input type="submit" value="Tallenna">
+    <input type="number" name="goal" min="1300" max="6000" value="{{goal}}" required>
+    <input type="submit" value="Käytä omaa tavoitetta">
     <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
   </form>
   <br>
-  <form action="/add_details" methods="POST">
-    <input type="radio" name="gender" value="1" checked> 
+  <h4>2. Täytä tiedot ja käytä sovelluksen laskemaa arviota</h4>
+  <form action="/add_details" method="POST">
+    <input type="radio" name="gender" value="1" required> 
     <label for="1">Nainen</label>
     <input type="radio" name="gender" value="2"> 
     <label for="2">Mies</label><br>
 
     <label for="age">Ikä:</label><br>
-    <input type="number" id="age" name="age" min="20" max="120" required><br>
+    <input type="number" id="age" name="age" min="20" max="120" value="{{details[1]}}" required><br>
 
     <label for="height">Pituus:</label><br>
-    <input type="number" id="height" name="height" min="0" max="220" required><br>
+    <input type="number" id="height" name="height" min="0" max="220" value="{{details[2]}}" required><br>
 
     <label for="weight">Paino:</label><br>
-    <input type="number" id="weight" name="weight" min="0" max="200" required><br>
+    <input type="number" id="weight" name="weight" min="0" max="200" value="{{details[3]}}" required><br>
     <br>
 
     <table width="600" cellspacing="0" cellpadding="0">
       <tr>
-        <th width="200">Vapaa-ajan aktiivisuus</th>
-        <th width="200">Työn aktiivisuus</th>
+        <th width="200"><h3>Vapaa-ajan aktiivisuus</h3></th>
         <th></th>
-        <th></th>
+        <th width="200" style="text-align: center;"><h3>Työn aktiivisuus</h3></th>
       </tr>
       <tr>
         <th></th>
@@ -57,7 +58,7 @@
       <tr>
         <th>Ei lainkaan aktiviinen</th>
         <th>
-          <input type="radio" name="activity" value="1.3" checked>
+          <input type="radio" name="activity" value="1.3" required>
           <label for="1.3">&emsp;1,3</label>
         </th>
         <th>
@@ -116,12 +117,12 @@
       </tr>
     </table>
 
-    <input type="submit" value="Tallenna">
+    <input type="submit" value="Käytä laskettua arviota">
     <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
   </form>
 
   <form action="/food_search">
-    <input type="submit" value=" Ohita " />
+    <input type="submit" value="Ohita tämä vaihe" />
   </form>
 </body>
 

@@ -34,6 +34,7 @@
             </form>
             <p class="p4">Ei mikään näistä? Kokeile toisella hakusanalla.</p>
           {% else %}
+            <h2>Hups!</h2>
             <p>Haulla "{{food_name}}" ei löytynyt yhtään elintarviketta.</p>
           {% endif %}
           
@@ -45,14 +46,8 @@
           <form action="/new_foodstuff">
             <input type="submit" value="Lisää oma ruoka">
           </form>
-          
-          
-          
-            
-
+         
         </div>
-
-       
 
     </section>
   </body>
