@@ -30,6 +30,6 @@ Sovelluksen avulla käyttäjä voi
 
 ## Dokumentaatio
 
-[Käyttöohje](https://github.com/mlkulmala/tsoha-FoodDiary/documentation/user_instructions.md)
+[Käyttöohje](https://github.com/mlkulmala/tsoha-FoodDiary/blob/master/documentation/user_instructions.md)
 
-[Tietokannan rakenne](https://github.com/mlkulmala/tsoha-FoodDiary/documentation/database_structure.md)
+[Tietokannan rakenne](https://github.com/mlkulmala/tsoha-FoodDiary/blob/master/documentation/database_structure.md)
