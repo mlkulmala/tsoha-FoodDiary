@@ -25,7 +25,6 @@ def add_to_diary(user_id, foodstuff_id, meal_id, amount):
 
 
 def create_new_diary(user_id):
-    # tarkistetaan, onko henkilö asettanut tavoitteen
     priority = persons.get_goal_priority(user_id)
     if priority:
         calorie_goal = persons.get_personal_goal
@@ -59,7 +58,7 @@ def get_todays_goal(user_id):
         result = db.session.execute(sql, {"user_id":user_id}).fetchone()
         return result[0]
     elif persons.get_goal_priority(user_id):
-        calorie_goal = persons.get_personal_goal(user_id) # palauttaa None tai oikean arvon
+        calorie_goal = persons.get_personal_goal(user_id)
     elif persons.has_profile(user_id):
         calorie_goal = persons.count_calorie_goal_by_id(user_id)
     else:
@@ -67,7 +66,7 @@ def get_todays_goal(user_id):
     return calorie_goal
 
 
-# tarvitaanko tätä? sisältyy metodiin get_diary_by_date()
+
 def get_calorie_goal_by_date(user_id, date):
     sql = "SELECT calorie_goal FROM food_diaries WHERE user_id=:user_id AND date=:date"
     result = db.session.execute(sql, {"user_id":user_id, "date":date})
