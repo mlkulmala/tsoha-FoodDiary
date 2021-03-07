@@ -5,7 +5,7 @@
 Sovellus avautuu näkymään, jossa sen toiminta esitellään lyhyesti ja käyttäjä ohjataan kirjautumaan tai 
 rekisteröitymään käyttäjäksi.
 
-Sovellus ilmoittaa, jos käyttäjänimi on liian lyhyt, TAI KÄYTÖSSÄ!, tai jos salasana ei täytä kriteerejä 
+Sovellus ilmoittaa, jos käyttäjänimi on liian lyhyt tai jo käytössä, tai jos salasana ei täytä kriteerejä 
 tai salasanan vahvistus ei täsmää.
 
 <img src="https://github.com/mlkulmala/tsoha-FoodDiary/blob/master/documentation/images/login.png" width="300">
