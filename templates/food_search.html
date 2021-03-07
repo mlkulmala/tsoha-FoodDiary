@@ -37,11 +37,11 @@
             <tr>
               <td>{{portion[3]}}</td>
               <td>{{portion[4]}}</td>
-              <td>{{portion[4] / 100 * portion[5]}}</td>
-              <td>{{portion[4] / 100 * portion[6] | round(1, 'ceil')}}</td>
-              <td>{{portion[4] / 100 * portion[7] | round(1, 'ceil')}}</td>
-              <td>{{portion[4] / 100 * portion[8] | round(1, 'ceil')}}</td>
-              <td>{{portion[4] / 100 * portion[9] | round(1, 'ceil')}}</td>
+              <td>{{(portion[4] / 100 * portion[5]|float) | round(1, 'common')}}</td>
+              <td>{{(portion[4] / 100 * portion[6]|float) | round(1, 'common')}}</td>
+              <td>{{(portion[4] / 100 * portion[7]|float) | round(1, 'common')}}</td>
+              <td>{{(portion[4] / 100 * portion[8]|float) | round(1, 'common')}}</td>
+              <td>{{(portion[4] / 100 * portion[9]|float) | round(1, 'common')}}</td>
               <td><form action="/remove_from_diary" methods="GET">
                 <input type="hidden" name="remove" value={{portion[0]}}>
                 <input type="submit" value="Poista" class="button2">
@@ -51,11 +51,11 @@
             <tr>
               <td>{{portion[3]}}</td>
               <td>{{portion[4]}}</td>
-              <td>{{portion[4] / 100 * portion[5]}}</td>
-              <td>{{portion[4] / 100 * portion[6] | round(1, 'ceil')}}</td>
-              <td>{{portion[4] / 100 * portion[7] | round(1, 'ceil')}}</td>
-              <td>{{portion[4] / 100 * portion[8] | round(1, 'ceil')}}</td>
-              <td>{{portion[4] / 100 * portion[9] | round(1, 'ceil')}}</td>
+              <td>{{(portion[4] / 100 * portion[5]|float) | round(1, 'common')}}</td>
+              <td>{{(portion[4] / 100 * portion[6]|float) | round(1, 'common')}}</td>
+              <td>{{(portion[4] / 100 * portion[7]|float) | round(1, 'common')}}</td>
+              <td>{{(portion[4] / 100 * portion[8]|float) | round(1, 'common')}}</td>
+              <td>{{(portion[4] / 100 * portion[9]|float) | round(1, 'common')}}</td>
               <td><form action="/remove_from_diary" methods="GET">
                 <input type="hidden" name="remove" value={{portion[0]}}>
                 <input type="submit" value="Poista" class="button2">
