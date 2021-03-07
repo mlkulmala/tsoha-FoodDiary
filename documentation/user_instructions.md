@@ -14,6 +14,6 @@ tai salasanan vahvistus ei täsmää.
 Sisäänkirjautumisen jälkeen ohjataan suoraan ruokapäiväkirjan täyttöön. Jos käyttäjällä on ruokapäiväkirjassa
 merkintöjä, ne näkyvät näkymässä taulukkona, samoin päivän energiansaanti.
 
-<img src="https://raw.githubusercontent.com/mlkulmala/tsoha-FoodDiary/documentation/images/food_search.png" width="400">
+<img src="https://github.com/mlkulmala/tsoha-FoodDiary/blob/master/documentation/images/login.png" width="400">
 
 

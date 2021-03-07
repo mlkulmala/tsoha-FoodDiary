@@ -2,5 +2,5 @@
 
 ## Tietokantakaavio
 
-<img src="https://raw.githubusercontent.com/mlkulmal/tsoha-fooddiary/documentation/images/database_structure.png" width="400">
+<img src="https://github.com/mlkulmala/tsoha-FoodDiary/blob/master/documentation/images/database.png" width="400">
 
