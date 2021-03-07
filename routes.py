@@ -44,7 +44,7 @@ def register():
         if users.register(username, password):
             return redirect("/create_profile")
         else:
-            return render_template("register.html", error=True, message="Tunnuksen luominen ei onnistunut.")
+            return render_template("register.html", error=True, message="Tunnuksen on jo käytössä.")
 
 @app.route("/food_search")
 def search():
